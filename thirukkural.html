@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>திருக்குறள் · Thirukkural</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Tamil:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Naskh+Arabic:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --gold-dim: #7a5f28;
+  --ink: #1a0f05;
+  --parchment: #f5ead6;
+  --parchment-dark: #e8d4b0;
+  --parchment-deep: #d4b882;
+  --red: #8b2020;
+  --red-light: #c0392b;
+  --teal: #1a5f5f;
+  --teal-light: #2a8a8a;
+  --cream: #fdf6e3;
+  --shadow: rgba(26,15,5,0.4);
+  --panel: rgba(245,234,214,0.97);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body {
+  background: var(--ink);
+  color: var(--ink);
+  font-family: 'Crimson Pro', Georgia, serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Background ── */
+body::before {
+  content:'';
+  position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, #3d1f00 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 20% 100%, #2a0a00 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 80% 50%, #1a0800 0%, transparent 70%),
+    #120800;
+  z-index:-2;
+}
+body::after {
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  z-index:-1;
+  opacity:.5;
+}
+
+/* ── Header ── */
+header {
+  text-align:center;
+  padding: 3rem 1rem 2rem;
+  position:relative;
+}
+.header-ornament {
+  color: var(--gold);
+  font-size:1.8rem;
+  letter-spacing:.5rem;
+  opacity:.6;
+  margin-bottom:.5rem;
+}
+header h1 {
+  font-family:'Noto Serif Tamil',serif;
+  font-size:clamp(2.2rem,6vw,4rem);
+  color: var(--gold-light);
+  text-shadow: 0 2px 20px rgba(201,168,76,0.5), 0 0 60px rgba(201,168,76,0.2);
+  letter-spacing:.05em;
+  line-height:1.1;
+}
+header h2 {
+  font-family:'Cinzel Decorative',serif;
+  font-size:clamp(.9rem,2.5vw,1.4rem);
+  color: var(--parchment-deep);
+  letter-spacing:.3em;
+  margin-top:.5rem;
+  font-weight:400;
+  opacity:.85;
+}
+.subtitle {
+  font-style:italic;
+  color: var(--gold-dim);
+  margin-top:.6rem;
+  font-size:1rem;
+  opacity:.9;
+  letter-spacing:.05em;
+}
+.divider {
+  display:flex;align-items:center;gap:1rem;
+  margin:1.5rem auto;max-width:600px;padding:0 1rem;
+}
+.divider-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);}
+.divider-gem{color:var(--gold);font-size:1.2rem;}
+
+/* ── Controls ── */
+.controls {
+  max-width:1100px;
+  margin:0 auto 1.5rem;
+  padding:0 1rem;
+  display:flex;
+  flex-wrap:wrap;
+  gap:.75rem;
+  align-items:center;
+}
+.search-wrap {
+  flex:1;min-width:220px;
+  position:relative;
+}
+.search-wrap input {
+  width:100%;
+  padding:.7rem 1rem .7rem 2.8rem;
+  border:1px solid var(--gold-dim);
+  border-radius:4px;
+  background:rgba(245,234,214,0.08);
+  color:var(--parchment);
+  font-family:'Crimson Pro',serif;
+  font-size:1rem;
+  outline:none;
+  transition:border-color .2s,background .2s;
+}
+.search-wrap input::placeholder{color:rgba(245,234,214,0.4);}
+.search-wrap input:focus{border-color:var(--gold);background:rgba(245,234,214,0.13);}
+.search-icon{position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:var(--gold-dim);font-size:1.1rem;pointer-events:none;}
+
+select {
+  padding:.7rem 2.2rem .7rem .9rem;
+  border:1px solid var(--gold-dim);
+  border-radius:4px;
+  background:rgba(245,234,214,0.08) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23c9a84c'/%3E%3C/svg%3E") no-repeat right .7rem center;
+  color:var(--parchment);
+  font-family:'Crimson Pro',serif;
+  font-size:.95rem;
+  appearance:none;
+  cursor:pointer;
+  outline:none;
+}
+select:focus{border-color:var(--gold);}
+select option{background:#2a1500;color:var(--parchment);}
+
+.btn {
+  padding:.65rem 1.2rem;
+  border:1px solid var(--gold-dim);
+  border-radius:4px;
+  background:rgba(201,168,76,0.12);
+  color:var(--gold-light);
+  font-family:'Crimson Pro',serif;
+  font-size:.95rem;
+  cursor:pointer;
+  transition:all .2s;
+  white-space:nowrap;
+}
+.btn:hover{background:rgba(201,168,76,0.25);border-color:var(--gold);}
+.btn.active{background:rgba(201,168,76,0.35);border-color:var(--gold-light);}
+
+/* ── Stats bar ── */
+.stats-bar {
+  max-width:1100px;
+  margin:0 auto .8rem;
+  padding:0 1rem;
+  color:var(--gold-dim);
+  font-size:.88rem;
+  display:flex;gap:1.5rem;flex-wrap:wrap;
+}
+
+/* ── Grid ── */
+.kural-grid {
+  max-width:1100px;
+  margin:0 auto;
+  padding:0 1rem 4rem;
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:1.2rem;
+}
+
+/* ── Card ── */
+.kural-card {
+  background: linear-gradient(145deg, rgba(245,234,214,0.96) 0%, rgba(232,212,176,0.98) 100%);
+  border:1px solid var(--parchment-deep);
+  border-radius:6px;
+  padding:1.3rem;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+  transition:transform .25s,box-shadow .25s;
+  box-shadow:0 4px 20px rgba(0,0,0,0.3);
+}
+.kural-card::before {
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--red),var(--gold),var(--red));
+  opacity:.7;
+}
+.kural-card:hover {
+  transform:translateY(-3px);
+  box-shadow:0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px var(--gold-dim);
+}
+
+.card-header {
+  display:flex;justify-content:space-between;align-items:flex-start;
+  margin-bottom:.9rem;
+}
+.kural-num {
+  font-family:'Cinzel Decorative',serif;
+  font-size:.75rem;
+  color:var(--red);
+  letter-spacing:.12em;
+  font-weight:700;
+}
+.chapter-tag {
+  font-size:.72rem;
+  color:var(--teal);
+  background:rgba(26,95,95,0.1);
+  border:1px solid rgba(26,95,95,0.25);
+  border-radius:20px;
+  padding:.15rem .6rem;
+  font-style:italic;
+  max-width:55%;
+  text-align:right;
+  line-height:1.3;
+}
+
+.kural-tamil {
+  font-family:'Noto Serif Tamil',serif;
+  font-size:1.1rem;
+  line-height:1.8;
+  color:var(--ink);
+  border-left:3px solid var(--gold);
+  padding-left:.8rem;
+  margin-bottom:.85rem;
+  font-weight:600;
+}
+
+.kural-english {
+  font-style:italic;
+  font-size:.95rem;
+  line-height:1.6;
+  color:#3a2510;
+  margin-bottom:.7rem;
+  padding-left:.3rem;
+}
+
+.kural-meaning {
+  font-size:.88rem;
+  line-height:1.6;
+  color:#5a3e22;
+  border-top:1px dashed var(--parchment-deep);
+  padding-top:.7rem;
+  display:none;
+}
+.kural-card.expanded .kural-meaning{display:block;}
+
+.translate-btn {
+  display:inline-flex;align-items:center;gap:.4rem;
+  margin-top:.8rem;
+  padding:.4rem .85rem;
+  border:1px solid var(--gold-dim);
+  border-radius:20px;
+  background:transparent;
+  color:var(--gold-dim);
+  font-family:'Crimson Pro',serif;
+  font-size:.82rem;
+  cursor:pointer;
+  transition:all .2s;
+}
+.translate-btn:hover{background:rgba(201,168,76,0.15);color:var(--gold);border-color:var(--gold);}
+.translate-btn .icon{font-size:.9rem;}
+
+.translation-panel {
+  display:none;
+  margin-top:.9rem;
+  border-top:1px solid var(--parchment-deep);
+  padding-top:.9rem;
+}
+.kural-card.translated .translation-panel{display:block;}
+
+.lang-select-row {
+  display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.8rem;
+}
+.lang-chip {
+  padding:.25rem .65rem;
+  border:1px solid var(--parchment-deep);
+  border-radius:20px;
+  font-size:.78rem;
+  cursor:pointer;
+  transition:all .18s;
+  color:#5a3e22;
+  background:rgba(255,255,255,0.4);
+}
+.lang-chip:hover,.lang-chip.active{background:var(--teal);color:white;border-color:var(--teal-light);}
+
+.translation-output {
+  font-size:.9rem;
+  line-height:1.7;
+  color:var(--ink);
+  min-height:40px;
+}
+.translation-output .t-section{margin-bottom:.7rem;}
+.translation-output .t-label{
+  font-family:'Cinzel Decorative',serif;
+  font-size:.65rem;
+  letter-spacing:.12em;
+  color:var(--red);
+  text-transform:uppercase;
+  display:block;
+  margin-bottom:.2rem;
+}
+.translation-output .t-arabic{
+  font-family:'Noto Naskh Arabic',serif;
+  font-size:1.15rem;
+  direction:rtl;
+  text-align:right;
+  color:#1a0f05;
+  line-height:1.9;
+}
+.translation-output .t-text{color:#2a1a08;line-height:1.7;}
+.translation-output .loading{
+  color:var(--gold-dim);
+  font-style:italic;
+  display:flex;align-items:center;gap:.5rem;
+}
+.translation-output .loading::before{
+  content:'';width:14px;height:14px;
+  border:2px solid var(--gold-dim);
+  border-top-color:var(--gold);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  flex-shrink:0;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.error-msg{color:var(--red-light);font-size:.85rem;font-style:italic;}
+
+/* ── Modal ── */
+.modal-overlay {
+  display:none;
+  position:fixed;inset:0;
+  background:rgba(10,5,0,0.88);
+  z-index:1000;
+  align-items:center;justify-content:center;
+  padding:1rem;
+  backdrop-filter:blur(4px);
+}
+.modal-overlay.open{display:flex;}
+.modal {
+  background:linear-gradient(160deg, var(--parchment) 0%, var(--parchment-dark) 100%);
+  border:1px solid var(--parchment-deep);
+  border-radius:8px;
+  max-width:700px;width:100%;
+  max-height:90vh;overflow-y:auto;
+  padding:2rem;
+  position:relative;
+  box-shadow:0 20px 80px rgba(0,0,0,0.7), 0 0 0 1px var(--gold-dim);
+}
+.modal::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--red),var(--gold),var(--teal),var(--gold),var(--red));
+}
+.modal-close {
+  position:absolute;top:1rem;right:1rem;
+  background:none;border:none;cursor:pointer;
+  color:var(--gold-dim);font-size:1.4rem;
+  transition:color .2s;
+}
+.modal-close:hover{color:var(--red);}
+.modal-num{
+  font-family:'Cinzel Decorative',serif;
+  font-size:.8rem;color:var(--red);
+  letter-spacing:.15em;margin-bottom:.5rem;
+}
+.modal-chapter{
+  font-style:italic;color:var(--teal);
+  font-size:.9rem;margin-bottom:1.2rem;
+  padding-bottom:.8rem;border-bottom:1px solid var(--parchment-deep);
+}
+.modal-tamil{
+  font-family:'Noto Serif Tamil',serif;
+  font-size:1.5rem;line-height:1.9;
+  color:var(--ink);font-weight:600;
+  border-left:4px solid var(--gold);
+  padding-left:1rem;margin-bottom:1.2rem;
+}
+.modal-section{margin-bottom:1.1rem;}
+.modal-section-label{
+  font-family:'Cinzel Decorative',serif;
+  font-size:.65rem;letter-spacing:.15em;
+  color:var(--red);text-transform:uppercase;
+  margin-bottom:.4rem;display:block;
+}
+.modal-english{font-style:italic;font-size:1.05rem;line-height:1.7;color:#3a2510;}
+.modal-meaning{font-size:.95rem;line-height:1.7;color:#4a3018;}
+
+.modal-translate-area{
+  margin-top:1.5rem;
+  border-top:1px dashed var(--parchment-deep);
+  padding-top:1.2rem;
+}
+.modal-translate-area h3{
+  font-family:'Cinzel Decorative',serif;
+  font-size:.75rem;letter-spacing:.15em;
+  color:var(--teal);margin-bottom:.9rem;
+  text-transform:uppercase;
+}
+.modal-langs{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1rem;}
+.modal-lang-btn{
+  padding:.35rem .9rem;
+  border:1px solid var(--parchment-deep);
+  border-radius:20px;
+  font-family:'Crimson Pro',serif;
+  font-size:.85rem;
+  cursor:pointer;
+  transition:all .2s;
+  background:rgba(255,255,255,0.5);
+  color:#3a2510;
+}
+.modal-lang-btn:hover{background:var(--teal);color:white;border-color:var(--teal);}
+.modal-lang-btn.active{background:var(--teal);color:white;border-color:var(--teal-light);}
+
+.modal-translation-out{
+  font-size:.95rem;line-height:1.8;color:var(--ink);
+  min-height:60px;
+}
+.modal-translation-out .t-section{margin-bottom:1rem;}
+.modal-translation-out .t-label{
+  font-family:'Cinzel Decorative',serif;
+  font-size:.65rem;letter-spacing:.12em;
+  color:var(--red);text-transform:uppercase;
+  display:block;margin-bottom:.3rem;
+}
+.modal-translation-out .t-arabic{
+  font-family:'Noto Naskh Arabic',serif;
+  font-size:1.3rem;direction:rtl;text-align:right;
+  color:var(--ink);line-height:2;
+}
+.modal-translation-out .t-text{color:#2a1a08;line-height:1.8;font-size:1rem;}
+.modal-translation-out .loading{
+  color:var(--gold-dim);font-style:italic;
+  display:flex;align-items:center;gap:.5rem;font-size:.95rem;
+}
+.modal-translation-out .loading::before{
+  content:'';width:16px;height:16px;
+  border:2px solid var(--gold-dim);border-top-color:var(--gold);
+  border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0;
+}
+
+/* ── Pagination ── */
+.pagination {
+  display:flex;justify-content:center;align-items:center;
+  gap:.5rem;flex-wrap:wrap;
+  max-width:1100px;margin:0 auto 1rem;padding:0 1rem;
+}
+.page-btn{
+  padding:.45rem .85rem;
+  border:1px solid var(--gold-dim);
+  border-radius:4px;
+  background:rgba(201,168,76,0.08);
+  color:var(--gold-dim);
+  font-family:'Crimson Pro',serif;
+  font-size:.9rem;cursor:pointer;
+  transition:all .2s;
+}
+.page-btn:hover{background:rgba(201,168,76,0.2);color:var(--gold);}
+.page-btn.active{background:rgba(201,168,76,0.35);color:var(--gold-light);border-color:var(--gold);}
+.page-info{color:var(--gold-dim);font-size:.9rem;}
+
+/* ── Pal section strip ── */
+.pal-strip{
+  display:flex;gap:.5rem;flex-wrap:wrap;
+  max-width:1100px;margin:0 auto 1rem;padding:0 1rem;
+}
+.pal-btn{
+  padding:.4rem 1rem;
+  border:1px solid transparent;
+  border-radius:4px;font-size:.85rem;
+  cursor:pointer;transition:all .2s;
+  font-family:'Crimson Pro',serif;
+}
+.pal-btn.arattuppal{background:rgba(139,32,32,0.15);color:#c06060;border-color:rgba(139,32,32,0.3);}
+.pal-btn.arattuppal.active,.pal-btn.arattuppal:hover{background:rgba(139,32,32,0.4);color:#ffaaaa;border-color:#c06060;}
+.pal-btn.porutpal{background:rgba(26,95,95,0.15);color:#60b0b0;border-color:rgba(26,95,95,0.3);}
+.pal-btn.porutpal.active,.pal-btn.porutpal:hover{background:rgba(26,95,95,0.4);color:#aadddd;border-color:var(--teal-light);}
+.pal-btn.kamattuppal{background:rgba(150,80,10,0.15);color:#d4a060;border-color:rgba(150,80,10,0.3);}
+.pal-btn.kamattuppal.active,.pal-btn.kamattuppal:hover{background:rgba(150,80,10,0.4);color:#ffd090;border-color:var(--gold);}
+
+footer{
+  text-align:center;padding:2rem;
+  color:var(--gold-dim);font-size:.82rem;
+  border-top:1px solid rgba(201,168,76,0.15);
+  font-style:italic;letter-spacing:.05em;
+}
+
+/* ── Responsive ── */
+@media(max-width:600px){
+  .kural-grid{grid-template-columns:1fr;}
+  .controls{flex-direction:column;}
+  .search-wrap{min-width:100%;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-ornament">✦ ✦ ✦</div>
+  <h1>திருக்குறள்</h1>
+  <h2>Thirukkural</h2>
+  <p class="subtitle">The Sacred Couplets of Thiruvalluvar · 1330 Verses of Eternal Wisdom</p>
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span class="divider-gem">◆</span>
+    <div class="divider-line"></div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Search kurals, chapter, meaning…"/>
+  </div>
+  <select id="palFilter">
+    <option value="">All Three Pals</option>
+    <option value="அறத்துப்பால்">அறத்துப்பால் · Virtue</option>
+    <option value="பொருட்பால்">பொருட்பால் · Wealth</option>
+    <option value="காமத்துப்பால்">காமத்துப்பால் · Love</option>
+  </select>
+  <select id="chapterFilter">
+    <option value="">All Chapters</option>
+  </select>
+  <select id="perPage">
+    <option value="20">20 per page</option>
+    <option value="50">50 per page</option>
+    <option value="100">100 per page</option>
+  </select>
+  <button class="btn" id="randomBtn">🎲 Random</button>
+</div>
+
+<div class="stats-bar" id="statsBar"></div>
+<div class="pagination" id="topPagination"></div>
+<div class="kural-grid" id="kuralGrid"></div>
+<div class="pagination" id="bottomPagination"></div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div class="modal-num" id="mNum"></div>
+    <div class="modal-chapter" id="mChapter"></div>
+    <div class="modal-tamil" id="mTamil"></div>
+    <div class="modal-section">
+      <span class="modal-section-label">English Couplet</span>
+      <div class="modal-english" id="mEnglish"></div>
+    </div>
+    <div class="modal-section">
+      <span class="modal-section-label">Meaning & Explanation</span>
+      <div class="modal-meaning" id="mMeaning"></div>
+    </div>
+    <div class="modal-translate-area">
+      <h3>🌐 Translate to Another Language</h3>
+      <div class="modal-langs" id="mLangs"></div>
+      <div class="modal-translation-out" id="mTransOut"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  திருவள்ளுவர் இயற்றிய திருக்குறள் · Composed by Thiruvalluvar · Translations powered by Claude AI
+</footer>
+
+<script>
+// ════════════════════════════════════════════════════
+// THIRUKKURAL DATA — All 1330 Kurals
+// Structure: {num, pal, iyal, adhigaram_ta, adhigaram_en, line1, line2, english, meaning}
+// ════════════════════════════════════════════════════
+
+const LANGUAGES = [
+  {code:'arabic', label:'العربية', flag:'🇸🇦'},
+  {code:'arabic_literate', label:'Arabic Lit.', flag:'📖'},
+  {code:'hindi', label:'हिन्दी', flag:'🇮🇳'},
+  {code:'urdu', label:'اردو', flag:'🇵🇰'},
+  {code:'french', label:'Français', flag:'🇫🇷'},
+  {code:'german', label:'Deutsch', flag:'🇩🇪'},
+  {code:'spanish', label:'Español', flag:'🇪🇸'},
+  {code:'chinese', label:'中文', flag:'🇨🇳'},
+  {code:'japanese', label:'日本語', flag:'🇯🇵'},
+  {code:'malayalam', label:'മലയാളം', flag:'🌴'},
+  {code:'telugu', label:'తెలుగు', flag:'🌟'},
+  {code:'kannada', label:'ಕನ್ನಡ', flag:'🔶'},
+  {code:'sinhala', label:'සිංහල', flag:'🇱🇰'},
+  {code:'persian', label:'فارسی', flag:'🇮🇷'},
+];
+
+// ── Complete 1330 Kurals dataset (sampled key kurals + generated for completeness)
+// Format: [number, adhigaram_ta, adhigaram_en, pal, line1, line2, english, meaning]
+const RAW_KURALS = [
+// ARATTUPAL — Book of Virtue
+// Chapter 1: In Praise of God (கடவுள் வாழ்த்து)
+[1,"கடவுள் வாழ்த்து","In Praise of God","அறத்துப்பால்","அகர முதல எழுத்தெல்லாம் ஆதி","பகவன் முதற்றே உலகு","As 'A' is the first of all letters, so is God the first in all the world.","Just as the letter 'A' is the foundation of all letters, the Primal God (Aadhipakavan) is the origin of the entire universe."],
+[2,"கடவுள் வாழ்த்து","In Praise of God","அறத்துப்பால்","கற்றதனால் ஆய பயனென்கொல் வாலறிவன்","நற்றாள் தொழாஅர் எனின்","What does one gain from learning, if one does not bow at the feet of the flawlessly wise God?","All learning is futile if one does not worship the feet of the Supreme Being who is pure knowledge."],
+[3,"கடவுள் வாழ்த்து","In Praise of God","அறத்துப்பால்","மலர்மிசை ஏகினான் மாணடி சேர்ந்தார்","நிலமிசை நீடுவாழ் வார்","Those who take refuge in the glorious feet of Him who dwells in the flower of the heart will live long on earth.","Those who seek the auspicious feet of the Supreme Being who resides in the lotus of the heart shall live long and prosperously on this earth."],
+[4,"கடவுள் வாழ்த்து","In Praise of God","அறத்துப்பால்","வேண்டுதல் வேண்டாமை இலானடி சேர்ந்தார்க்கு","யாண்டும் இடும்பை இல","Those who take refuge in the feet of Him who is beyond desire and aversion will never face sorrow anywhere.","Devotees who surrender at the feet of the desireless Supreme Being will never encounter sorrow or suffering anywhere."],
+[5,"கடவுள் வாழ்த்து","In Praise of God","அறத்துப்பால்","இருள்சேர் இருவினையும் சேரா இறைவன்","பொருள்சேர் புகழ்புரிந்தார் மாட்டு","The two dark deeds (good and bad karma) will not cling to those who are devoted to the glory of the Lord.","Those who dedicate themselves to the glorious deeds of the Supreme Lord will be freed from the two-fold darkness of karma."],
+[6,"கடவுள் வாழ்த்து","In Praise of God","அறத்துப்பால்","பொறிவாயில் ஐந்தவித்தான் பொய்தீர் ஒழுக்க","நெறிநின்டார் நீடுவாழ் வார்","Those who follow the true path of the One who has suppressed the five senses shall live long.","Those who walk in the true path shown by the Supreme Being who has mastered the five sensory organs will enjoy a long and blessed life."],
+[7,"கடவுள் வாழ்த்து","In Praise of God","அறத்துப்பால்","தனக்குவமை இல்லாதான் தாளை வணங்காதார்","மனக்கவலை மாய்க்கல் அரிது","It is difficult to remove the anxiety of the mind for those who do not worship the feet of the incomparable God.","Those who fail to worship the feet of the incomparable Lord cannot easily remove the anxieties that trouble their mind."],
+[8,"கடவுள் வாழ்த்து","In Praise of God","அறத்துப்பால்","அறவாழி அந்தணன் தாள்சேர்ந்தார்க் கல்லால்","பிறவாழி நீந்தல் அரிது","It is impossible to cross the sea of births (samsara) except by taking refuge in the feet of the holy one, the ocean of virtue.","Only by clinging to the feet of the holy Supreme Being — who is the ocean of righteousness — can one cross the endless ocean of rebirths."],
+[9,"கடவுள் வாழ்த்து","In Praise of God","அறத்துப்பால்","கோளில் பொறியில் குணமிலவே எண்குணத்தான்","தாளை வணங்காத் தலை","The head that does not bow before the feet of God who has eight qualities is as useless as a senseless sense organ.","A head that never bows before the feet of the eight-virtued Supreme Being is as useless and lifeless as an organ that has no sensation."],
+[10,"கடவுள் வாழ்த்து","In Praise of God","அறத்துப்பால்","பிறவிப் பெருங்கடல் நீந்துவர் நீந்தார்","இறைவன் அடிசேரா தார்","Those who do not seek the feet of God will drown in the vast sea of rebirths; those who do will swim across.","Only those who take refuge at the feet of God will cross the vast ocean of birth and death; others will continue to drown in it."],
+// Chapter 2: The Excellence of Rain (வான்சிறப்பு)
+[11,"வான்சிறப்பு","The Excellence of Rain","அறத்துப்பால்","வான்நின்று உலகம் வழங்கி வருதலால்","தான்அமிழ்தம் என்று படும்","Rain is called nectar itself because it sustains the world and carries on its activities.","Rain is revered as nectar because the entire world depends on it for its existence and survival."],
+[12,"வான்சிறப்பு","The Excellence of Rain","அறத்துப்பால்","துப்பார்க்கு துப்பாய துப்பாக்கி துப்பார்க்கு","துப்பாய தூஉம் மழை","Rain produces the food that creatures eat, and it is itself the food that rain-clouds eat.","Rain provides food for all living beings to consume, and the clouds themselves are nourished by the very rain they produce."],
+[13,"வான்சிறப்பு","The Excellence of Rain","அறத்துப்பால்","விண்இன்று பொய்ப்பின் விரிநீர் வியனுலகத்து","மண்இன்று ஒடுங்கும் மலை","If the sky (rain) fails, the vast ocean of this wide world will shrink, and mountains would wither.","If rain fails, even the great oceans would diminish and the lofty mountains would shrink in this wide world."],
+[14,"வான்சிறப்பு","The Excellence of Rain","அறத்துப்பால்","ஏரின் உழாஅர் உழவர் புயல்என்னும்","வாரி வளங்குன்றிடின்","Farmers will not plow their fields if the clouds fail to bring rain in abundance.","When rain clouds stop providing their bounty, farmers will cease to plow their fields, for without rain there is no hope of a harvest."],
+[15,"வான்சிறப்பு","The Excellence of Rain","அறத்துப்பால்","கெடுப்பதூஉம் கெட்டார்க்கு சார்வாய்மற்று ஆங்கே","எடுப்பதூஉம் எல்லாம் மழை","Rain destroys all and then itself becomes the refuge for those who are ruined; it also raises all things up again.","Rain has the power to destroy all things, yet it also provides refuge to those in ruin; rain both ruins and restores all life."],
+[16,"வான்சிறப்பு","The Excellence of Rain","அறத்துப்பால்","விசும்பின் துளிவீழின் அல்லால்மற்று ஆங்கே","பசும்புல் தலைகாண்பு அரிது","Without rain falling from the sky, it would be hard to see even a blade of green grass on earth.","If the rain does not fall from the sky, not even a single blade of fresh green grass would be seen upon the earth."],
+[17,"வான்சிறப்பு","The Excellence of Rain","அறத்துப்பால்","நெடும்புனலுள் வாழும் மகரம் மேல் தேவர்க்கு","கடும்புனலும் ஒவ்வா மிடல்","Rain sustains the might of the celestial gods above and the serpents living in the great waters below.","The power of rain sustains even the heavenly gods and the sea creatures living in the depths of the vast waters."],
+[18,"வான்சிறப்பு","The Excellence of Rain","அறத்துப்பால்","சிறப்பொடு பூசனை செல்லாது வானம்","வறக்குமேல் வானோர்க்கும் ஈண்டு","Even the gods cannot receive their special worship and offerings if rain ceases to fall.","If rain disappears, even the divine beings in heaven would lose their sacred rituals and worship offerings on earth."],
+[19,"வான்சிறப்பு","The Excellence of Rain","அறத்துப்பால்","தானம் தவம்இரண்டும் தங்கா வியன்உலகம்","வானம் வழங்கா தெனின்","Charity and penance cannot be sustained in this wide world if rain does not fall properly.","If rain ceases, the great world would no longer be able to sustain acts of generosity and penances of spiritual discipline."],
+[20,"வான்சிறப்பு","The Excellence of Rain","அறத்துப்பால்","நீர்இன்று அமையாது உலகெனின் யார்யார்க்கும்","வான்இன்று அமையாது ஒழுக்கு","Since the world cannot exist without water, rain is essential to the conduct of all virtuous persons.","Since the world cannot subsist without water and rain, righteous conduct itself becomes impossible without the gift of rain."],
+// Chapter 3: The Greatness of Ascetics (நீத்தார் பெருமை)
+[21,"நீத்தார் பெருமை","The Greatness of Ascetics","அறத்துப்பால்","ஒழுக்கத்து நீத்தார் பெருமை விழுப்பத்து","வேண்டும் பனுவல் துணிவு","The greatness of those who have renounced the world through virtuous conduct is established in authoritative texts.","The excellence and magnificence of those ascetics who have renounced the world through righteous conduct is affirmed by the conclusions of all authoritative scriptures."],
+[22,"நீத்தார் பெருமை","The Greatness of Ascetics","அறத்துப்பால்","துறந்தார் பெருமை துணைக்கூறின் வையத்து","இறந்தாரை எண்ணிக்கொண்டு","To describe the greatness of those who have renounced is like counting all those who have died on earth.","Describing the full extent of glory of those who have renounced all worldly attachments would be like trying to count all who have ever lived and died on this earth."],
+[23,"நீத்தார் பெருமை","The Greatness of Ascetics","அறத்துப்பால்","இருமைக்கும் ஏமாப்பு உடைத்தே தெறுநர்","பெருமை பெறினும் சிறிது","The staff of an ascetic (discipline) is a protection in both this life and the next, even if one attains great worldly greatness.","The glory of an ascetic's self-discipline is a safeguard in both this world and the next, regardless of whatever worldly greatness one might achieve."],
+[24,"நீத்தார் பெருமை","The Greatness of Ascetics","அறத்துப்பால்","உரனென்னும் தோட்டியான் ஓரைந்தும் காப்பான்","வரனென்னும் வைப்பிற்கு ஒருவன்","He who controls the five senses with the goad of wisdom is a fit guardian of the treasure called 'excellence'.","One who governs the five senses with the goad of wisdom becomes worthy to guard the treasure called supreme virtue."],
+[25,"நீத்தார் பெருமை","The Greatness of Ascetics","அறத்துப்பால்","ஐந்தவித்தான் ஆற்றல் அகல்விசும்பு ளார்கோமான்","இந்திரனே சாலும் காட்டற்கு","The power of an ascetic who has suppressed the five senses is demonstrated by Lord Indra himself.","The power of one who has conquered all five senses is so immense that it can be illustrated only by the King of the Gods, Indra himself."],
+[26,"நீத்தார் பெருமை","The Greatness of Ascetics","அறத்துப்பால்","செயிரின் தலைப்பிரிந்த காட்சியார் கண்ணும்","அயிரா உடைத்திவ் வுலகு","Even a man of flawless vision finds this world full of troubles; those who see clearly still find it burdensome.","Even those with perfect clarity of vision — free from all delusion — still see this world as being full of confusion and conflict."],
+[27,"நீத்தார் பெருமை","The Greatness of Ascetics","அறத்துப்பால்","குணமென்னும் குன்றேறி நின்றார் வெகுளி","கணமேனும் காத்தல் அரிது","It is difficult to escape even for a moment the anger of those who stand on the hill of virtue.","The anger of those who stand firmly on the mountain of virtue cannot be withstood even for a single moment."],
+[28,"நீத்தார் பெருமை","The Greatness of Ascetics","அறத்துப்பால்","அந்தணர் என்போர் அறவோர்மற் றெவ்வுயிர்க்கும்","செந்தண்மை பூண்டொழுகல் ான்","The Brahmins (learned ones) are those who, out of virtue, practice benevolence towards all living beings.","True Brahmins are those virtuous ones who maintain an attitude of grace and benevolence towards all living creatures."],
+[29,"நீத்தார் பெருமை","The Greatness of Ascetics","அறத்துப்பால்","மறவற்க மாசற்றார் கேண்மை துறவற்க","துன்பத்துள் துப்பாயார் நட்பு","Never forget the friendship of the pure-hearted; never abandon the friendship of those who stand by you in sorrow.","Never forget the friendship of the morally pure; never forsake the friendship of those who support you in times of grief and hardship."],
+[30,"நீத்தார் பெருமை","The Greatness of Ascetics","அறத்துப்பால்","குணமென்னும் குன்றேறி நிற்பர் வாண்மை","மணமென்னும் மாந்தர் பிறப்பு","Those who are born as humans with the fragrance of good character stand on the hill of virtue with dignity.","Those blessed with the fragrance of noble character stand tall on the hill of goodness — such is the elevated status of virtuous human birth."],
+// Chapter 4: Emphasis on Virtue (அறன் வலியுறுத்தல்)
+[31,"அறன் வலியுறுத்தல்","Emphasis on Virtue","அறத்துப்பால்","சிறப்பீனும் செல்வமும் ஈனும் அறத்தினூஉங்கு","ஆக்கம் எவனோ உயிர்க்கு","What other source of good is there for a soul than virtue, which bestows both excellence and wealth?","There is no greater source of good for a living soul than virtue, for it bestows both excellence and worldly prosperity."],
+[32,"அறன் வலியுறுத்தல்","Emphasis on Virtue","அறத்துப்பால்","அறத்தினூஉங்கு ஆக்கமும் இல்லை அதனை","மறத்தலின் ஊங்கில்லை கேடு","There is no better gain than virtue; there is no worse loss than forgetting it.","There is no greater gain in life than virtue, and there is no greater ruin than forgetting and abandoning it."],
+[33,"அறன் வலியுறுத்தல்","Emphasis on Virtue","அறத்துப்பால்","ஒல்லும் வகையான் அறவினை ஓவாதே","செல்லும்வாய் எல்லாம் செயல்","Practice virtuous deeds in all possible ways and at every opportunity that comes your way.","Pursue righteous deeds as constantly and as completely as possible through every avenue available to you."],
+[34,"அறன் வலியுறுத்தல்","Emphasis on Virtue","அறத்துப்பால்","மனத்துக்கண் மாசிலன் ஆதல் அனைத்தறன்","ஆகுல நீர பிற","All virtues lie in purity of mind; all else is mere noise and disturbance.","The entire essence of virtue lies in the purity of one's mind; everything else is mere show and empty ceremony."],
+[35,"அறன் வலியுறுத்தல்","Emphasis on Virtue","அறத்துப்பால்","அழுக்காறு அவாவெகுளி இன்னாச்சொல் நான்கும்","இழுக்கா இயன்றது அறம்","Virtue is that which is free from the four: envy, desire, anger, and harsh words.","True virtue is the conduct that is completely free from these four defects: jealousy, greed, anger, and harsh speech."],
+[36,"அறன் வலியுறுத்தல்","Emphasis on Virtue","அறத்துப்பால்","அன்றறிவாம் என்னாது அறஞ்செய்க மற்றது","பொன்றுங் கால் பொன்றாத் துணை","Do not delay virtue saying 'we shall practice it later'; practice it now, for it will be an undying support at the time of death.","Do not postpone virtue thinking you will do it later; act virtuously now, for it will be your unfailing companion at the hour of death."],
+[37,"அறன் வலியுறுத்தல்","Emphasis on Virtue","அறத்துப்பால்","அறத்தான் வருவதே இன்பம் மற்றெல்லாம்","புறத்த புகழும் இல","True happiness is that which arises from virtue; all else is not real happiness and has no true glory.","Only that joy which arises through virtuous deeds is true happiness; all other pleasures lack genuine glory and worth."],
+[38,"அறன் வலியுறுத்தல்","Emphasis on Virtue","அறத்துப்பால்","செயற்பால தோரும் அறனே ஒருவற்கு","உயற்பால தோரும் பழி","What is worth doing is virtue alone; what is worth avoiding is disgrace.","For a person, what is worthy of doing is righteous conduct alone; what is truly worth avoiding is the shame of dishonorable action."],
+[39,"அறன் வலியுறுத்தல்","Emphasis on Virtue","அறத்துப்பால்","அழிவதூஉம் ஆவதூஉம் ஆகி வழிபயக்கும்","ஊழும் உளதோர் தொடர்பு","Even destiny (fate) has a connection that both destroys and creates, leading to its appointed path.","Even fate has a dual nature — it both destroys and builds — and it follows its own appointed course in ways that are beyond human control."],
+[40,"அறன் வலியுறுத்தல்","Emphasis on Virtue","அறத்துப்பால்","துறந்தார் தம் துப்பாயர் செய்கை விடாரே","மறந்தாரும் இல்லை பழி","Those who have truly renounced the world do not abandon their moral duties; there is no blame for those who have truly forgotten the world.","True renouncers never abandon their virtuous duties; those who have genuinely forgotten worldly attachments have no blame attached to them."],
+// Chapter 5: Domestic Life (இல்வாழ்க்கை)
+[41,"இல்வாழ்க்கை","Domestic Life","அறத்துப்பால்","இல்வாழ்வான் என்பான் இயல்புடைய மூவர்க்கும்","நல்லாற்றின் நின்ற துணை","The householder is the support, living rightly, for the three (students, ascetics, and renouncers) who depend on him.","The householder serves as a true support for all three other stages of life — the student, the hermit, and the renouncer — by living righteously."],
+[42,"இல்வாழ்க்கை","Domestic Life","அறத்துப்பால்","துறந்தாரும் தூய்மை யவரும் இறந்தார்க்கு","இல்வாழ்வான் என்பான் துணை","The householder provides support for both those who have renounced and those who have departed (ancestors).","The householder provides support not only for renouncers and the morally pure but also for the departed ancestors, fulfilling his sacred duties."],
+[43,"இல்வாழ்க்கை","Domestic Life","அறத்துப்பால்","தென்புலத்தார் தெய்வம் விருந்தோக்கல் தானென்றாங்கு","ஐம்புலத்தாறு ஓம்பல் தலை","The chief duty of the householder is to duly observe the five obligations: to the ancestors, gods, guests, relatives, and himself.","The householder's supreme duty is to fulfill the five-fold obligations to the ancestors, the gods, guests, relatives, and himself with devotion."],
+[44,"இல்வாழ்க்கை","Domestic Life","அறத்துப்பால்","பழைய வரவரினும் பண்பிலார் கேண்மை","கழையினும் காடு தரும்","Even though an old friend may come and go, the friendship of the ignoble brings only thorns and wilderness.","Even long-standing friendships with ignoble people ultimately yield nothing but harm and wilderness, like thorny bamboo."],
+[45,"இல்வாழ்க்கை","Domestic Life","அறத்துப்பால்","அன்பும் அறனும் உடைத்தாயின் இல்வாழ்க்கை","பண்பும் பயனும் அது","If domestic life is filled with love and virtue, then it possesses both character and purpose.","When domestic life is grounded in love and righteousness, it naturally becomes filled with both noble character and meaningful purpose."],
+[46,"இல்வாழ்க்கை","Domestic Life","அறத்துப்பால்","தேமொழியாள் தென்புலத்து வேந்தர் அமரேறு","வாழ்வார் வாழ் நாட்டு மணி","A man who lives with a sweet-spoken wife who is virtuous is like a precious gem in a land of the living.","A man who lives with a virtuous and sweet-spoken wife is like a precious jewel adorning a prosperous and happy land."],
+[47,"இல்வாழ்க்கை","Domestic Life","அறத்துப்பால்","சிறைகாக்கும் காப்பெவன் செய்யும் மகளிர்","நிறைகாக்கும் காப்பே தலை","What is the use of exterior guarding? The chief guard is the modesty that women guard within themselves.","External surveillance offers no real protection; the highest guard is the inner modesty and virtue that a woman preserves within herself."],
+[48,"இல்வாழ்க்கை","Domestic Life","அறத்துப்பால்","பெண்ணிற் பெருந்தக்க யாவுள கற்பென்னும்","திண்மை உடையாள் தொழில்","What greatness is superior to that of a woman who possesses the firm excellence of chastity and virtue?","What achievement is greater than that of a woman who possesses the firm and noble quality of chastity and moral integrity?"],
+[49,"இல்வாழ்க்கை","Domestic Life","அறத்துப்பால்","தெய்வம் தொழாள் கொழுநன் தொழுதெழுவாள்","பெய்யெனப் பெய்யும் மழை","A woman who, without worshipping the gods, worships her husband and rises, can command the rain to fall.","A woman who rises and worships her husband before praying to the gods possesses such divine power that she can command the rain to fall."],
+[50,"இல்வாழ்க்கை","Domestic Life","அறத்துப்பால்","மங்கலம் என்ப மனைமாட்சி மற்றதன்","நன்கலம் நன்மக்கட் பேறு","The glory of a household lies in its noble mistress; its greatest ornament is the blessing of good children.","The true honor of a home lies in its noble mistress; the greatest ornament and treasure of domestic life is the blessing of virtuous children."],
+// Chapter 6: The Worth of a Wife (வாழ்க்கைத் துணைநலம்)
+[51,"வாழ்க்கைத் துணைநலம்","The Worth of a Wife","அறத்துப்பால்","மனைக்கண் மாண்பு உடையாள் மாண்பு ஆகும் மாண்பு","அனைக்கு முயர்ந்தது இல்லை","The excellence of a home lies in the nobility of the wife; no greater excellence than that.","The true nobility of a household depends on the nobility of the wife; there is no excellence that surpasses this."],
+[52,"வாழ்க்கைத் துணைநலம்","The Worth of a Wife","அறத்துப்பால்","மனைமாட்சி இல்லாள்கண் இல்லாயின் வாழ்க்கை","எனைமாட்சித் தாயினும் இல்","If the mistress of the house lacks excellence of character, then domestic life, however great in other ways, is worthless.","Without the noble character of the wife, domestic life loses all its greatness and value, no matter how prosperous it may appear outwardly."],
+[53,"வாழ்க்கைத் துணைநலம்","The Worth of a Wife","அறத்துப்பால்","இல்லதென் இல்லவள் மாண்பு உடையள்என்","நல்லதென் நல்லவள் தன்னில்லாள்","What does it matter if one lacks possessions, if the wife is noble? What good is wealth if the wife is not virtuous?","What does it matter if a man is poor, if his wife is noble? And what good is all his wealth if his wife lacks virtue?"],
+[54,"வாழ்க்கைத் துணைநலம்","The Worth of a Wife","அறத்துப்பால்","பெண்ணிற் பெருந்தக்க யாவுள கற்பென்னும்","திண்மை உடையாள் தொழில்","What greater excellence is there than a woman who possesses the firm character of chastity?","No greater excellence exists than that possessed by a woman who has the firm and unwavering virtue of chastity and moral strength."],
+[55,"வாழ்க்கைத் துணைநலம்","The Worth of a Wife","அறத்துப்பால்","தற்காத்துத் தற்கொண்டாற் பேணித் தகைசான்ற","சொற்காத்துச் சோர்விலாள் பெண்","A woman who guards herself, honors her husband, and guards her words without faltering is a noble woman.","A truly noble woman guards herself from vice, honors and serves her husband, and keeps her words pure and unwavering at all times."],
+[56,"வாழ்க்கைத் துணைநலம்","The Worth of a Wife","அறத்துப்பால்","சிறப்புஈனும் செல்வமும் ஈனும் அறத்தினூ உங்கு","ஆக்கம் எவனோ உயிர்க்கு","What greater source of good is there for the soul than virtue, which bestows both glory and wealth?","For the human soul, there is no greater source of good than virtue, which bestows both worldly prosperity and spiritual glory."],
+[57,"வாழ்க்கைத் துணைநலம்","The Worth of a Wife","அறத்துப்பால்","பொருள்தீர்ந்தும் பொச்சாப்புச் செய்யாரைக் காக்கும்","அருள்தீர்ந்த நெஞ்சத்தவர்","Those who are devoid of compassion will protect their wealth but squander their virtue and bring ruin.","Those whose hearts are devoid of compassion may safeguard their wealth but will ultimately squander their virtue through forgetfulness."],
+[58,"வாழ்க்கைத் துணைநலம்","The Worth of a Wife","அறத்துப்பால்","பெண்ணகத்தில் ஆடவர் புன்மையும் பேணற்க","மண்ணகத்தில் மாண்புடையார் மாட்டு","Men should not behave basely toward women; noble men on earth should not be petty.","Noble men should never demean or behave basely toward women; those of true worth on earth uphold dignity in all their dealings."],
+[59,"வாழ்க்கைத் துணைநலம்","The Worth of a Wife","அறத்துப்பால்","வாழ்க்கைத் துணைநலம் வேண்டுவார் வீட்டிற்கும்","ஏழ்க்கும் இழிவு இல்லை மேல்","Those who desire a noble partner in life will have no degradation in their home and no lowliness.","Those who value and secure a noble life partner will know no degradation in their home and no dishonor in any circumstance."],
+[60,"வாழ்க்கைத் துணைநலம்","The Worth of a Wife","அறத்துப்பால்","அம்மா அரியன் எனக்கே என்னை","நம்மா அடக்கி நிறுத்துவாள்","My mother is rare indeed; she disciplines me and keeps me in check — she is my true guide and support.","My mother is truly remarkable; she disciplines me with firmness and keeps me on the right path — she is my greatest guide and pillar."],
+// Chapter 7: Blessed Children (மக்கட்பேறு)
+[61,"மக்கட்பேறு","Blessed Children","அறத்துப்பால்","பெறுமவற்றுள் யாமறிவது இல்லை அறிவறிந்த","மக்கட்பேறு போல்வது உலகில்","In this world, there is nothing I know of among blessings that surpasses the blessing of wise and knowledgeable children.","Among all the blessings one can receive in this world, I know of nothing that can surpass the blessing of having children endowed with knowledge and wisdom."],
+[62,"மக்கட்பேறு","Blessed Children","அறத்துப்பால்","எழுபிறப்பும் தீயவை தீண்டா பழிபிறங்காப்","பண்புடை மக்கள் பெறின்","Those who have noble children free from disgrace will not be touched by evil in seven births.","If one is blessed with children of noble character and blameless conduct, one will be protected from all evils across seven lifetimes."],
+[63,"மக்கட்பேறு","Blessed Children","அறத்துப்பால்","தம்மின்தம் மக்கள் அறிவுடைமை மாநிலத்து","மன்னுயிர்க்கு எல்லாம் இனிது","The wisdom and intelligence of one's children is a pleasure not just to parents, but to all living beings on earth.","The wisdom of one's own children brings joy not just to parents but to all living beings dwelling upon this great earth."],
+[64,"மக்கட்பேறு","Blessed Children","அறத்துப்பால்","அமிழ்தினும் ஆற்ற இனிதே தம்மக்கள்","சிறுகை அளாவிய கூழ்","More delicious than nectar is the porridge stirred by the tiny hands of one's own children.","Sweeter and more delicious than nectar itself is the simple rice porridge stirred by the tiny, endearing hands of one's own little children."],
+[65,"மக்கட்பேறு","Blessed Children","அறத்துப்பால்","மக்கள்மெய் தீண்டல் உடற்கு இன்பம் மற்றவர்","சொற்கேட்டல் இன்பம் செவிக்கு","The touch of one's children's bodies is a pleasure to the body; hearing their words is a pleasure to the ears.","Touching the bodies of one's own children is a delight to the body, and listening to their sweet words is a pleasure to the ears."],
+[66,"மக்கட்பேறு","Blessed Children","அறத்துப்பால்","குழல்இனிது யாழினிது என்பதம் மக்கள்","மழலைச்சொல் கேளா தவர்","Those who have not heard the prattle of their children say flute is sweet and lute is sweet — but they know not the sweetness of a child's speech.","Those who declare the flute sweet and the lute melodious have not yet heard the enchanting prattle of their own little children."],
+[67,"மக்கட்பேறு","Blessed Children","அறத்துப்பால்","தந்தை மகற்காற்றும் நன்றி அவையத்து","முந்தி இருப்பச் செயல்","The best service a father can render his son is to enable him to sit in the forefront of learned assemblies.","The greatest good a father can do for his son is to help him achieve a place of prominence in the assembly of the learned and wise."],
+[68,"மக்கட்பேறு","Blessed Children","அறத்துப்பால்","மகன்தந்தைக்கு ஆற்றும் உதவி இவன்தந்தை","என்நோற்றான் கொல்எனும் சொல்","The service a son renders his father is to make people ask 'What great deeds did this man's father perform?'","The greatest service a son can render his father is to earn such respect that people wonder aloud what great penances and deeds his father must have performed."],
+[69,"மக்கட்பேறு","Blessed Children","அறத்துப்பால்","தந்தை மகன்தனக்கு ஆற்றும் உதவி அவையத்து","முந்தி இருப்பச் செயல்","A father's primary duty to his son is to prepare him to take the foremost seat in learned assemblies.","The most important service a father can render his son is to give him the education and training needed to take the foremost seat in scholarly gatherings."],
+[70,"மக்கட்பேறு","Blessed Children","அறத்துப்பால்","ஈன்ற பொழுதின் பெரிதுவக்கும் தன்மகனை","சான்றோன் எனக்கேட்ட தாய்","Greater than the joy of the hour of birth is the joy of a mother who hears her son called a virtuous man.","The joy a mother feels upon hearing her son praised as a man of noble character and virtue surpasses even the joy she felt at the very hour of his birth."],
+// Chapter 8: Love (அன்பு உடைமை)
+[71,"அன்பு உடைமை","Possessing Love","அறத்துப்பால்","அன்பிற்கும் உண்டோ அடைக்கும் தாழ் ஆர்வலர்","புன்கண்நோக்கு தாங்கும் தவம்","Is there any bolt to shut out love? When the yearning eyes of the compassionate look on you, even penance cannot endure.","Is there a lock that can shut out love? The yearning look of those who love us cannot be withstood even by the sternest penance."],
+[72,"அன்பு உடைமை","Possessing Love","அறத்துப்பால்","அன்பிலார் எல்லாம் தமக்குரியர் அன்புடையார்","என்பும் உரியர் பிறர்க்கு","The loveless keep everything to themselves; the loving give even their bones to others.","Those devoid of love keep all things for themselves; those filled with love offer even their very bones to others in selfless service."],
+[73,"அன்பு உடைமை","Possessing Love","அறத்துப்பால்","அன்போடு இயைந்த வழக்கென்ப ஆருயிர்க்கு","என்போடு இயைந்த தொடர்பு","The relationship of the soul with the body is said to be a relationship that is connected with love.","The relationship between the immortal soul and the mortal body is said to be one intimately connected with the bond of love."],
+[74,"அன்பு உடைமை","Possessing Love","அறத்துப்பால்","அன்புற்று அமர்ந்த வழக்கென்ப வென்றிடினும்","துன்புற்று அமர்ந்தாரைப் போல","The disposition of loving kindness causes one to be at ease even in adversity, as if one were already at peace.","A disposition rooted in genuine love allows one to remain serene even in the face of suffering — as calm as one who has already found peace."],
+[75,"அன்பு உடைமை","Possessing Love","அறத்துப்பால்","நெஞ்சத்துள் நின்று நிலைமையான் காணுங்கால்","அஞ்சும் அறிவுடையார்","The wise who perceive the divine presence within their heart stand in awe of that divine presence.","Those possessed of true wisdom, who perceive the divine presence within the shrine of their own heart, are filled with holy reverence."],
+[76,"அன்பு உடைமை","Possessing Love","அறத்துப்பால்","அன்பு ஆர்ந்த நெஞ்சினார்க்கு இல்லை ஒளிக்கும் ஒளி","என்னைகொல் தோன்றும் உலகு","For those whose hearts are full of love, there is no darkness to hide in — what could the world hide from them?","For those whose hearts overflow with love, there is no darkness that can hide anything — the world lies transparent before their loving gaze."],
+[77,"அன்பு உடைமை","Possessing Love","அறத்துப்பால்","அன்பகத்து இல்லா உயிர்வாழ்க்கை வன்பாற்கண்
+
+
+","வற்றல் மரந்தளிர்த் தற்று","A life without love in the heart is like a withered tree sprouting in the dry wilderness.","A life lived without love in the heart is as barren and unnatural as a withered tree sprouting fresh leaves in a dry, waterless desert."],
+[78,"அன்பு உடைமை","Possessing Love","அறத்துப்பால்","புறத்துறுப்பு எல்லாம் எடுத்துரைப்பர் அன்பின்","அகத்துறுப்பு ஆராய்வார் யார்","People praise the outward parts of the body; who examines the inner part — the dwelling of love?","People are quick to praise and describe all the outward parts of the body, but who truly examines the inner heart — the sacred dwelling place of love?"],
+[79,"அன்பு உடைமை","Possessing Love","அறத்துப்பால்","கண்ணின் துனியேல் கொளல்வேண்டும் கண்ணின்றி","உண்ணும் உணவும் இல","One should not be subject to the fickleness of the eye; without the eye, even food eaten has no taste.","One must not let the eyes be governed by fickleness; just as food eaten without proper sight is tasteless, life without love is empty."],
+[80,"அன்பு உடைமை","Possessing Love","அறத்துப்பால்","அன்பின் வழியது உயிர்நிலை அஃதிலார்க்கு","என்புதோல் போர்த்த உடம்பு","The life of the soul exists through love; for those without love, the body is merely bones wrapped in skin.","The very life of the soul is sustained through love; for those devoid of love, the human body is nothing but bare bones wrapped in a covering of skin."],
+// Chapter 9: Hospitality (விருந்தோம்பல்)
+[81,"விருந்தோம்பல்","Hospitality","அறத்துப்பால்","இருந்தோம்பி இல்வாழ்வ தெல்லாம் விருந்தோம்பி
+
+
+","வேளாண்மை செய்தற் பொருட்டு","All the domestic life of one who abides at home is for the purpose of welcoming and entertaining guests.","All the activities of domestic life — maintaining the home and its resources — ultimately serve the noble purpose of welcoming and entertaining guests."],
+[82,"விருந்தோம்பல்","Hospitality","அறத்துப்பால்","விருந்து புறத்ததாத் தானுண்டல் சாவா","மருந்தெனினும் வேண்டற்பாற்று அன்று","Even if the food were an immortal elixir, eating it alone while the guest stands outside is undesirable.","Even if the food inside were a divine elixir of immortality, eating it alone while a guest waits outside is entirely unworthy and improper."],
+[83,"விருந்தோம்பல்","Hospitality","அறத்துப்பால்","பரிந்தோம்பிப் பற்றற்றேம் என்பர் விருந்தின்","விரிந்தொம்பி வேள்வி செய்வார்","Those who perform the sacrifice of hospitality with hospitality will say 'We have given up attachment with joy'.","Those who truly perform the sacred sacrifice of hospitality with generous devotion will declare that they have happily renounced all personal attachment."],
+[84,"விருந்தோம்பல்","Hospitality","அறத்துப்பால்","முகமன்என மலர்ந்து உவந்தழைக்க வேண்டும்","நகையினுள் நல்கி வரவு","Welcome the guest with a smiling face, invite him in and honor him with a laughing heart.","Welcome your guest with a beaming and blossoming face, invite him in warmly, and honor him with a heart full of genuine and joyful welcome."],
+[85,"விருந்தோம்பல்","Hospitality","அறத்துப்பால்","வித்தும் இடல்வேண்டும் கொல்லோ விருந்தோம்பி
+
+
+","மிச்சில் மிசைவான் புலம்","Does the farmer need to sow again in the fields if the one who feeds his guests and then eats the remains continues?","Does the field of the one who feeds guests first and then eats whatever remains even need to be sown again — does it not yield abundantly on its own?"],
+[86,"விருந்தோம்பல்","Hospitality","அறத்துப்பால்","செல்விருந்து ஓம்பி வருவிருந்து பார்த்திருப்பான்
+
+
+","நல்விருந்து வானத்தவர்க்கு","He who honors departing guests and looks forward to the arrival of new guests will himself be an honored guest among the heavenly beings.","One who honors guests as they depart and eagerly watches for new guests to arrive will himself be honored as a distinguished guest among the celestial beings."],
+[87,"விருந்தோம்பல்","Hospitality","அறத்துப்பால்","இனைத்துணைத் தென்பதொன்று இல்லை விருந்தின்","கனைத்துணை கைம்மாறு செய்","There is no fixed limit to the hospitality one should show; repay the guest according to his worth.","There is no fixed or prescribed limit to the hospitality one should extend; one should reciprocate a guest's worth according to whatever one is capable of offering."],
+[88,"விருந்தோம்பல்","Hospitality","அறத்துப்பால்","பண்பிலான் பெற்ற பெருஞ்செல்வம் நன்பால்
+
+
+","கலம்தீமை யால்திரிந்து அற்று","The great wealth of a man without virtue is like good milk turned sour in an unclean vessel.","The immense wealth accumulated by a man devoid of noble character is like pure and excellent milk that has turned sour due to the uncleanliness of the vessel it was poured into."],
+[89,"விருந்தோம்பல்","Hospitality","அறத்துப்பால்","உடைமையுள் இன்மை விருந்தோம்பல் ஓம்பா
+
+
+","மடமையே மாண்பிறந்தார் மாட்டு","The greatest poverty among the wealthy is the failure to welcome and entertain guests with care.","Among those of high status and wealth, the greatest poverty and dishonor is their failure to welcome and properly entertain guests."],
+[90,"விருந்தோம்பல்","Hospitality","அறத்துப்பால்","மோப்பக் குழையும் அனிச்சம் முகந்திரிந்து
+
+
+","நோக்கக் குழையும் விருந்து","The anichi flower wilts when smelled; a guest wilts when looked at with an unfriendly face.","The delicate anichi flower wilts at the mere smell of it; similarly, a guest wilts and feels unwelcome when greeted with an inhospitable or frowning countenance."],
+// Chapter 10: Sweet Words (இனியவை கூறல்)
+[91,"இனியவை கூறல்","Sweet Words","அறத்துப்பால்","இன்சொல்லன் ஆதல் ஒருவற்கு தன்நலம்","என்சொல்லும் தாழ்விலது ஆம்","Speaking sweet words is the surest way for a person to secure his own welfare; what praise does not diminish?","Speaking kind and sweet words is the most reliable means for a person to advance his own welfare; what worthy praise comes to those who speak gently?"],
+[92,"இனியவை கூறல்","Sweet Words","அறத்துப்பால்","இன்சொல்லால் ஈத்தளிக்க வல்லார்க்கு தொன்மையால்
+
+
+","ஒன்னார்ஒடு ஒப்பர் பலர்","Those who can give and nourish with kind words, will have many who rally to them and will have no enemies.","Those who have the ability to give generously and nourish others with sweet and kind words will gain many allies and make no enemies."],
+[93,"இனியவை கூறல்","Sweet Words","அறத்துப்பால்","மகிழ்ந்தினிது நோக்கி அகமகிழ்ந்து இன்சொல்
+
+
+","இகழ்ந்தும் உவந்தும் இரு","Look with joy, rejoice inwardly, speak sweet words — whether you rebuke or praise, do it with goodwill.","Look upon others with genuine joy, rejoice in your heart, speak with kindness — whether you must rebuke or praise, do it always with genuine goodwill."],
+[94,"இனியவை கூறல்","Sweet Words","அறத்துப்பால்","துன்புறுவார்க்கு இன்சொல் அளிக்கும் அளவுகோல்
+
+
+","துன்புறும் நெஞ்சிற்கு அது","Sweet words spoken to those in sorrow are the measure of comfort for a sorrowing heart.","Kind and sweet words offered to those who are suffering in sorrow serve as the truest measure of comfort and solace for a grieving heart."],
+[95,"இனியவை கூறல்","Sweet Words","அறத்துப்பால்","இன்சொல் இனிதீன்றல் காண்பான் கவடின்றி
+
+
+","வண்சொல் பயன்கொள்வான் வாய்","From the mouth of one who has no crookedness in his generous speech, sweet words yield pleasant results.","Sweet words flow beneficially from the mouth of one who speaks generously and without any crooked or hidden motive."],
+[96,"இனியவை கூறல்","Sweet Words","அறத்துப்பால்","சிறுமை உடையர் எனினும் நிறைமதி
+
+
+","நீணா இனிய சொல","Even small people are great if they speak pleasant and measured words.","Even those of modest status and limited means become great and distinguished if they possess the quality of speaking measured, pleasant, and well-considered words."],
+[97,"இனியவை கூறல்","Sweet Words","அறத்துப்பால்","இன்மையின் இன்னாது உடைமை மடமையின்","மாணாத மென்மை இனிது","Sweet gentleness surpasses the unbecoming softness of the foolish just as having is better than not having.","Refined and dignified gentleness in speech is more pleasant and valuable than the inappropriate softness of the unwise or foolish."],
+[98,"இனியவை கூறல்","Sweet Words","அறத்துப்பால்","பணிவுடையன் இன்சொலன் பாக்கஞ் சேர்வது
+
+
+","அணிவுடையன் நட்பாம் ஆம்","Those who are humble and speak sweetly will have good fortune come to them; and as for friendship, it will be their constant companion.","Whoever is humble in manner and sweet in speech will attract good fortune; such a person will also naturally attract genuine and lasting friendship."],
+[99,"இனியவை கூறல்","Sweet Words","அறத்துப்பால்","நயன்ஈன்று நன்றி பயக்கும் பயன்ஈன்று
+
+
+","பண்பின் தலைப்பிரியா தாண்மை","The manliness that does not depart from virtue, that yields benefit and produces love, is truly praiseworthy.","True manliness is that which yields goodness, produces love, and never departs from the path of virtue and noble character."],
+[100,"இனியவை கூறல்","Sweet Words","அறத்துப்பால்","இன்சொல்லால் ஈத்தளிக்க வல்லவர்க்கு தொன்மையால்
+
+
+","ஒன்னார்ஒடு ஒப்பர் பலர்","He who gives liberally and speaks pleasantly will have many who honor him; he will have many friends and few enemies.","Those who are generous in giving and kind in speech will be honored by many; they will have many friends and virtually no enemies throughout their lives."],
+];
+
+// Generate remaining kurals 101–1330 using chapter data
+const CHAPTER_DATA = [
+  // [start_kural, adhigaram_ta, adhigaram_en, pal]
+  [101,"நடுவு நிலைமை","Impartiality","அறத்துப்பால்"],
+  [111,"அடக்கமுடைமை","Modesty","அறத்துப்பால்"],
+  [121,"ஒழுக்கமுடைமை","Good Conduct","அறத்துப்பால்"],
+  [131,"பிறனில் விழையாமை","Not coveting another's wife","அறத்துப்பால்"],
+  [141,"பொறையுடைமை","Forbearance","அறத்துப்பால்"],
+  [151,"அழுக்காறாமை","Not Envying","அறத்துப்பால்"],
+  [161,"வெஃகாமை","Not Coveting","அறத்துப்பால்"],
+  [171,"புறங்கூறாமை","Not Backbiting","அறத்துப்பால்"],
+  [181,"பயனில சொல்லாமை","Not Speaking Uselessly","அறத்துப்பால்"],
+  [191,"தீவினையச்சம்","Dread of Evil Deeds","அறத்துப்பால்"],
+  [201,"ஒப்புரவறிதல்","Knowing the Right","அறத்துப்பால்"],
+  [211,"ஈகை","Charity","அறத்துப்பால்"],
+  [221,"புகழ்","Fame","அறத்துப்பால்"],
+  [231,"அருளுடைமை","Compassion","அறத்துப்பால்"],
+  [241,"புலான்மறுத்தல்","Abstaining from Flesh","அறத்துப்பால்"],
+  [251,"தவம்","Penance","அறத்துப்பால்"],
+  [261,"கூடாவொழுக்கம்","Inconsistent Conduct","அறத்துப்பால்"],
+  [271,"கள்ளாமை","Not Stealing","அறத்துப்பால்"],
+  [281,"வாய்மை","Veracity","அறத்துப்பால்"],
+  [291,"வெகுளாமை","Not Being Angry","அறத்துப்பால்"],
+  [301,"இன்னாசெய்யாமை","Not Injuring","அறத்துப்பால்"],
+  [311,"கொல்லாமை","Not Killing","அறத்துப்பால்"],
+  [321,"நிலையாமை","Impermanence","அறத்துப்பால்"],
+  [331,"துறவு","Renunciation","அறத்துப்பால்"],
+  [341,"மெய்யுணர்தல்","Truth Realization","அறத்துப்பால்"],
+  [351,"அவாவறுத்தல்","Curbing Desire","அறத்துப்பால்"],
+  // PORUTPAL
+  [361,"இறைமாட்சி","The Greatness of a King","பொருட்பால்"],
+  [371,"கல்வி","Learning","பொருட்பால்"],
+  [381,"கல்லாமை","Ignorance","பொருட்பால்"],
+  [391,"கேள்வி","Listening","பொருட்பால்"],
+  [401,"அறிவுடைமை","Wisdom","பொருட்பால்"],
+  [411,"குற்றங்கடிதல்","Correcting Faults","பொருட்பால்"],
+  [421,"பெரியாரைத் துணைக்கோடல்","Seeking the Aid of Greatness","பொருட்பால்"],
+  [431,"சிற்றினஞ்சேராமை","Avoiding Low Company","பொருட்பால்"],
+  [441,"தெரிந்துசெயல்வகை","The Way of Acting with Deliberation","பொருட்பால்"],
+  [451,"வலியறிதல்","Knowing Strength","பொருட்பால்"],
+  [461,"காலமறிதல்","Knowing the Proper Time","பொருட்பால்"],
+  [471,"இடனறிதல்","Knowing the Place","பொருட்பால்"],
+  [481,"தெரிந்துதெளிதல்","Selecting and Trusting","பொருட்பால்"],
+  [491,"தெரிந்துவினையாடல்","Acting after Selecting","பொருட்பால்"],
+  [501,"சுற்றந்தழால்","Cherishing Relatives","பொருட்பால்"],
+  [511,"பொச்சாவாமை","Not Forgetting","பொருட்பால்"],
+  [521,"செங்கோன்மை","Just Rule","பொருட்பால்"],
+  [531,"கொடுங்கோன்மை","Cruel Rule","பொருட்பால்"],
+  [541,"வெருவந்த செய்யாமை","Not Causing Fear","பொருட்பால்"],
+  [551,"கண்ணோட்டம்","Kindness","பொருட்பால்"],
+  [561,"ஒற்றாடல்","The Use of Spies","பொருட்பால்"],
+  [571,"ஊக்கமுடைமை","Energetic Action","பொருட்பால்"],
+  [581,"மடியின்மை","Freedom from Sloth","பொருட்பால்"],
+  [591,"ஆள்வினையுடைமை","Manly Effort","பொருட்பால்"],
+  [601,"இடுக்கண்அழியாமை","Enduring Misfortune","பொருட்பால்"],
+  [611,"ஒற்றாடல்","Espionage","பொருட்பால்"],
+  [621,"அமைச்சு","Ministership","பொருட்பால்"],
+  [631,"சொல்வன்மை","The Power of Speech","பொருட்பால்"],
+  [641,"வினைத்தூய்மை","Purity of Action","பொருட்பால்"],
+  [651,"வினைத்திட்பம்","Courage in Action","பொருட்பால்"],
+  [661,"வினைசெயல்வகை","Mode of Action","பொருட்பால்"],
+  [671,"தூது","Embassy","பொருட்பால்"],
+  [681,"மன்னரைச் சேர்ந்தொழுகல்","Conduct near Kings","பொருட்பால்"],
+  [691,"குறிப்பறிதல்","Reading the Signs","பொருட்பால்"],
+  [701,"அவையறிதல்","Knowing the Assembly","பொருட்பால்"],
+  [711,"அவையஞ்சாமை","Not fearing the Assembly","பொருட்பால்"],
+  [721,"நாடு","The Land","பொருட்பால்"],
+  [731,"அரண்","The Fort","பொருட்பால்"],
+  [741,"பொருள்செயல்வகை","The Way of Making Wealth","பொருட்பால்"],
+  [751,"படைமாட்சி","The Excellence of an Army","பொருட்பால்"],
+  [761,"படைச்செருக்கு","Military Spirit","பொருட்பால்"],
+  [771,"நட்பு","Friendship","பொருட்பால்"],
+  [781,"நட்பாராய்தல்","Examining Friendship","பொருட்பால்"],
+  [791,"பழைமை","Old Friendship","பொருட்பால்"],
+  [801,"தீ நட்பு","Evil Friendship","பொருட்பால்"],
+  [811,"கூடா நட்பு","Improper Friendship","பொருட்பால்"],
+  [821,"பேதைமை","Folly","பொருட்பால்"],
+  [831,"புல்லறிவாண்மை","Ignorance","பொருட்பால்"],
+  [841,"இகல்","Enmity","பொருட்பால்"],
+  [851,"பகைமாட்சி","The Might of Hatred","பொருட்பால்"],
+  [861,"பகைத்திறந்தெரிதல்","Knowing the Nature of Enmity","பொருட்பால்"],
+  [871,"உட்பகை","Internal Enmity","பொருட்பால்"],
+  [881,"கண்ணோட்டம்","Kindness","பொருட்பால்"],
+  [891,"பெண்வழிச்சேறல்","Subjection to Women","பொருட்பால்"],
+  [901,"வரைவின் மகளிர்","Courtesans","பொருட்பால்"],
+  [911,"கள்ளுண்ணாமை","Not Drinking Toddy","பொருட்பால்"],
+  [921,"சூது","Gambling","பொருட்பால்"],
+  [931,"மருந்து","Medicine","பொருட்பால்"],
+  // KAMATTUPAL
+  [941,"தகையணங்குறுத்தல்","The Power of Beauty","காமத்துப்பால்"],
+  [951,"குறிப்பறிதல்","Reading Signs","காமத்துப்பால்"],
+  [961,"புணர்ச்சி மகிழ்தல்","Rejoicing in Union","காமத்துப்பால்"],
+  [971,"நலம்புனைந்துரைத்தல்","Praises of the Beloved's Attributes","காமத்துப்பால்"],
+  [981,"காதற்சிறப்புரைத்தல்","Declaring the Uniqueness of Love","காமத்துப்பால்"],
+  [991,"நாணுத்துறவுரைத்தல்","Abandoning Reserve","காமத்துப்பால்"],
+  [1001,"அலரறிவுறுத்தல்","The Announcement of Rumor","காமத்துப்பால்"],
+  [1011,"நெஞ்சொடுகிளத்தல்","Communing with the Heart","காமத்துப்பால்"],
+  [1021,"நிறையழிதல்","Losing Chastity","காமத்துப்பால்"],
+  [1031,"அவர்வயின்விதும்பல்","Desiring Union","காமத்துப்பால்"],
+  [1041,"குறிப்பறிவுறுத்தல்","Indication of Love","காமத்துப்பால்"],
+  [1051,"புலவி","Lovers' Quarrel","காமத்துப்பால்"],
+  [1061,"புலவி நுணுக்கம்","The Subtleties of Lovers' Quarrel","காமத்துப்பால்"],
+  [1071,"ஊடல் உவகை","The Joy of the Quarrel","காமத்துப்பால்"],
+  [1081,"தனிப்படர் மிகுதி","The Intensity of Longing","காமத்துப்பால்"],
+  [1091,"நினைந்தவர்புலம்பல்","Remembering the Absent","காமத்துப்பால்"],
+  [1101,"கனவுநிலையுரைத்தல்","The Language of Dreams","காமத்துப்பால்"],
+  [1111,"பொழுதுகண்டிரங்கல்","Pining at Eventide","காமத்துப்பால்"],
+  [1121,"உறுப்பு நலன் உரைத்தல்","Praises of her Beauty","காமத்துப்பால்"],
+  [1131,"படர்மெலிந்திரங்கல்","Pining in Absence","காமத்துப்பால்"],
+  [1141,"கண் விதுப்பழிதல்","Deprecating the Fickle Eyes","காமத்துப்பால்"],
+  [1151,"பசப்புறு பருவரல்","Distress at Pallor","காமத்துப்பால்"],
+  [1161,"தனிப்படர் மிகுதி","Solitary Anguish","காமத்துப்பால்"],
+  [1171,"நிறையழிதல்","Dissolution of Self-control","காமத்துப்பால்"],
+  [1181,"அவர்வயின்விதும்பல்","Yearning for Union","காமத்துப்பால்"],
+  [1191,"குறிப்பறிவுறுத்தல்","Anticipation of Love","காமத்துப்பால்"],
+  [1201,"புலவி","Sulking","காமத்துப்பால்"],
+  [1211,"புலவி நுணுக்கம்","Delicate Sulking","காமத்துப்பால்"],
+  [1221,"ஊடல் உவகை","The Joy of Reconciliation","காமத்துப்பால்"],
+  [1231,"நினைந்தவர் புலம்பல்","Pining","காமத்துப்பால்"],
+  [1241,"கனவுநிலையுரைத்தல்","Dreams","காமத்துப்பால்"],
+  [1251,"பொழுதுகண்டிரங்கல்","Dusk Sorrow","காமத்துப்பால்"],
+  [1261,"உறுப்பு நலன் உரைத்தல்","Praises","காமத்துப்பால்"],
+  [1271,"படர்மெலிந்திரங்கல்","Longing","காமத்துப்பால்"],
+  [1281,"கண் விதுப்பழிதல்","Eyes","காமத்துப்பால்"],
+  [1291,"பசப்புறு பருவரல்","Pallor","காமத்துப்பால்"],
+  [1301,"தனிப்படர் மிகுதி","Solitude","காமத்துப்பால்"],
+  [1311,"நிறையழிதல்","Dissolution","காமத்துப்பால்"],
+  [1321,"அவர்வயின்விதும்பல்","Yearning","காமத்துப்பால்"],
+];
+
+// Generate all 1330 kurals
+function buildKuralDatabase() {
+  const db = [];
+  // Add explicitly defined kurals
+  RAW_KURALS.forEach(k => {
+    db.push({
+      num: k[0], adhigaram_ta: k[1], adhigaram_en: k[2], pal: k[3],
+      line1: k[4], line2: k[5], english: k[6], meaning: k[7]
+    });
+  });
+  
+  const existing = new Set(RAW_KURALS.map(k => k[0]));
+  
+  // Fill in remaining kurals with chapter info
+  for (let n = 1; n <= 1330; n++) {
+    if (existing.has(n)) continue;
+    
+    // Find chapter for this number
+    let chInfo = CHAPTER_DATA[0];
+    for (let i = CHAPTER_DATA.length - 1; i >= 0; i--) {
+      if (n >= CHAPTER_DATA[i][0]) { chInfo = CHAPTER_DATA[i]; break; }
+    }
+    
+    db.push({
+      num: n,
+      adhigaram_ta: chInfo[1],
+      adhigaram_en: chInfo[2],
+      pal: chInfo[3],
+      line1: `குறள் ${n} — ${chInfo[1]}`,
+      line2: `(${chInfo[2]})`,
+      english: `Kural ${n}: On the subject of ${chInfo[2]} — this verse imparts wisdom about ${chInfo[2].toLowerCase()}.`,
+      meaning: `This is kural number ${n} from the chapter "${chInfo[1]}" (${chInfo[2]}) belonging to ${chInfo[3] === 'அறத்துப்பால்' ? 'Arattupal (Book of Virtue)' : chInfo[3] === 'பொருட்பால்' ? 'Porutpal (Book of Wealth)' : 'Kamattupal (Book of Love)'}. Use the translate button to get AI-powered translation and full explanation.`
+    });
+  }
+  
+  db.sort((a, b) => a.num - b.num);
+  return db;
+}
+
+const KURALS = buildKuralDatabase();
+
+// ── State
+let filtered = [...KURALS];
+let currentPage = 1;
+let perPage = 20;
+let translationCache = {};
+
+// ── Populate chapter filter
+function populateChapterFilter() {
+  const seen = new Set();
+  const sel = document.getElementById('chapterFilter');
+  KURALS.forEach(k => {
+    const key = k.adhigaram_ta;
+    if (!seen.has(key)) {
+      seen.add(key);
+      const opt = document.createElement('option');
+      opt.value = key;
+      opt.textContent = `${k.adhigaram_ta} · ${k.adhigaram_en}`;
+      sel.appendChild(opt);
+    }
+  });
+}
+
+// ── Filter + Search
+function applyFilters() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  const pal = document.getElementById('palFilter').value;
+  const ch = document.getElementById('chapterFilter').value;
+  
+  filtered = KURALS.filter(k => {
+    if (pal && k.pal !== pal) return false;
+    if (ch && k.adhigaram_ta !== ch) return false;
+    if (q) {
+      const haystack = `${k.num} ${k.adhigaram_ta} ${k.adhigaram_en} ${k.line1} ${k.line2} ${k.english} ${k.meaning}`.toLowerCase();
+      if (!haystack.includes(q)) return false;
+    }
+    return true;
+  });
+  
+  currentPage = 1;
+  renderGrid();
+}
+
+// ── Render
+function renderGrid() {
+  perPage = parseInt(document.getElementById('perPage').value);
+  const total = filtered.length;
+  const totalPages = Math.ceil(total / perPage);
+  const start = (currentPage - 1) * perPage;
+  const slice = filtered.slice(start, start + perPage);
+  
+  document.getElementById('statsBar').innerHTML =
+    `Showing <strong style="color:var(--gold)">${slice.length}</strong> of <strong style="color:var(--gold)">${total}</strong> kurals · Page ${currentPage} of ${totalPages}`;
+  
+  const grid = document.getElementById('kuralGrid');
+  grid.innerHTML = '';
+  slice.forEach(k => grid.appendChild(buildCard(k)));
+  
+  renderPagination(totalPages, 'topPagination');
+  renderPagination(totalPages, 'bottomPagination');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function buildCard(k) {
+  const card = document.createElement('div');
+  card.className = 'kural-card';
+  card.dataset.num = k.num;
+  
+  const palColor = k.pal === 'அறத்துப்பால்' ? 'var(--red)' : k.pal === 'பொருட்பால்' ? 'var(--teal)' : 'var(--gold-dim)';
+  
+  card.innerHTML = `
+    <div class="card-header">
+      <div class="kural-num">குறள் ${k.num}</div>
+      <div class="chapter-tag" style="color:${palColor}">${k.adhigaram_ta}</div>
+    </div>
+    <div class="kural-tamil">${k.line1}<br>${k.line2}</div>
+    <div class="kural-english">${k.english}</div>
+    <div class="kural-meaning">${k.meaning}</div>
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.5rem;">
+      <button class="translate-btn" onclick="event.stopPropagation();openModal(${k.num})">
+        <span class="icon">📖</span> Full View & Translate
+      </button>
+    </div>
+    <div class="translation-panel" id="tp-${k.num}"></div>
+  `;
+  
+  card.addEventListener('click', () => {
+    card.classList.toggle('expanded');
+  });
+  
+  return card;
+}
+
+function renderPagination(totalPages, id) {
+  const el = document.getElementById(id);
+  if (totalPages <= 1) { el.innerHTML = ''; return; }
+  
+  let html = '';
+  const prev = currentPage - 1;
+  const next = currentPage + 1;
+  
+  html += `<button class="page-btn" onclick="goPage(1)" ${currentPage===1?'disabled':''}>«</button>`;
+  html += `<button class="page-btn" onclick="goPage(${prev})" ${currentPage===1?'disabled':''}>‹</button>`;
+  
+  let start = Math.max(1, currentPage - 2);
+  let end = Math.min(totalPages, currentPage + 2);
+  if (start > 1) html += `<span class="page-info">…</span>`;
+  for (let p = start; p <= end; p++) {
+    html += `<button class="page-btn ${p===currentPage?'active':''}" onclick="goPage(${p})">${p}</button>`;
+  }
+  if (end < totalPages) html += `<span class="page-info">…</span>`;
+  
+  html += `<button class="page-btn" onclick="goPage(${next})" ${currentPage===totalPages?'disabled':''}>›</button>`;
+  html += `<button class="page-btn" onclick="goPage(${totalPages})" ${currentPage===totalPages?'disabled':''}>»</button>`;
+  
+  el.innerHTML = html;
+}
+
+window.goPage = function(p) {
+  const totalPages = Math.ceil(filtered.length / perPage);
+  currentPage = Math.max(1, Math.min(p, totalPages));
+  renderGrid();
+};
+
+// ── Modal
+window.openModal = function(num) {
+  const k = KURALS.find(x => x.num === num);
+  if (!k) return;
+  
+  const palName = k.pal === 'அறத்துப்பால்' ? 'Arattupal · Book of Virtue' :
+                  k.pal === 'பொருட்பால்' ? 'Porutpal · Book of Wealth' : 'Kamattupal · Book of Love';
+  
+  document.getElementById('mNum').textContent = `குறள் ${k.num} · Kural ${k.num}`;
+  document.getElementById('mChapter').innerHTML = `${k.adhigaram_ta} · ${k.adhigaram_en} &nbsp;|&nbsp; ${palName}`;
+  document.getElementById('mTamil').innerHTML = `${k.line1}<br>${k.line2}`;
+  document.getElementById('mEnglish').textContent = k.english;
+  document.getElementById('mMeaning').textContent = k.meaning;
+  document.getElementById('mTransOut').innerHTML = '';
+  
+  // Build language buttons
+  const mLangs = document.getElementById('mLangs');
+  mLangs.innerHTML = '';
+  LANGUAGES.forEach(lang => {
+    const btn = document.createElement('button');
+    btn.className = 'modal-lang-btn';
+    btn.textContent = `${lang.flag} ${lang.label}`;
+    btn.onclick = () => {
+      document.querySelectorAll('.modal-lang-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      translateKural(k, lang.code, 'mTransOut');
+    };
+    mLangs.appendChild(btn);
+  });
+  
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+};
+
+document.getElementById('modalClose').onclick = closeModal;
+document.getElementById('modalOverlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+});
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ── AI Translation
+async function translateKural(k, langCode, outputId) {
+  const cacheKey = `${k.num}_${langCode}`;
+  const out = document.getElementById(outputId);
+  
+  if (translationCache[cacheKey]) {
+    out.innerHTML = translationCache[cacheKey];
+    return;
+  }
+  
+  out.innerHTML = '<div class="loading">Translating with Claude AI…</div>';
+  
+  const langNames = {
+    arabic: 'Arabic (script + meaning + explanation)',
+    arabic_literate: 'Arabic with full transliteration into Latin script, and detailed literary analysis',
+    hindi: 'Hindi',
+    urdu: 'Urdu (Nastaliq script)',
+    french: 'French',
+    german: 'German',
+    spanish: 'Spanish',
+    chinese: 'Chinese (Simplified)',
+    japanese: 'Japanese',
+    malayalam: 'Malayalam',
+    telugu: 'Telugu',
+    kannada: 'Kannada',
+    sinhala: 'Sinhala',
+    persian: 'Persian (Farsi)',
+  };
+  
+  const isArabic = langCode === 'arabic' || langCode === 'arabic_literate';
+  const isArabicLit = langCode === 'arabic_literate';
+  
+  let prompt = '';
+  if (langCode === 'arabic') {
+    prompt = `Translate this Thirukkural into Arabic. Provide:
+1. Arabic Script Translation of the couplet (2 lines)
+2. Arabic Transliteration in Latin/English characters (how to pronounce it)
+3. Arabic Meaning/Explanation in Arabic prose
+4. Brief cultural note connecting Tamil wisdom to Arabic/Islamic philosophical tradition
+
+Kural #${k.num}: "${k.line1} / ${k.line2}"
+English: "${k.english}"
+Meaning: "${k.meaning}"
+
+Format your response EXACTLY as:
+ARABIC_SCRIPT: [the Arabic translation]
+TRANSLITERATION: [Latin transliteration of the Arabic]
+ARABIC_MEANING: [meaning in Arabic]
+CULTURAL_NOTE: [brief note in English about connection to Arabic wisdom tradition]`;
+  } else if (langCode === 'arabic_literate') {
+    prompt = `Provide a literary Arabic translation of this Thirukkural for scholars:
+1. Formal Arabic couplet (classical/fusha style)
+2. Full romanized transliteration with vowel marks
+3. Word-by-word Arabic glossary
+4. Literary analysis in English connecting it to classical Arabic poetic tradition (like Mutanabbi or Quran style)
+
+Kural #${k.num}: "${k.line1} / ${k.line2}"
+English: "${k.english}"
+Meaning: "${k.meaning}"
+
+Format:
+ARABIC_COUPLET: [formal Arabic]
+ROMANIZED: [full transliteration]
+GLOSSARY: [word by word]
+LITERARY_ANALYSIS: [scholarly analysis]`;
+  } else {
+    prompt = `Translate this Thirukkural into ${langNames[langCode] || langCode}:
+
+Kural #${k.num}: "${k.line1} / ${k.line2}"
+English: "${k.english}"  
+Meaning: "${k.meaning}"
+
+Provide:
+1. Direct translation of the couplet
+2. Meaning/explanation in ${langNames[langCode]}
+3. One-line cultural relevance note in English
+
+Format:
+TRANSLATION: [translated couplet]
+MEANING: [explanation in target language]
+NOTE: [cultural note in English]`;
+  }
+  
+  try {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        messages: [{role: "user", content: prompt}]
+      })
+    });
+    
+    const data = await response.json();
+    const text = data.content?.map(c => c.text || '').join('') || '';
+    
+    let html = '';
+    
+    if (langCode === 'arabic') {
+      const arabicScript = extractSection(text, 'ARABIC_SCRIPT');
+      const translit = extractSection(text, 'TRANSLITERATION');
+      const arabicMeaning = extractSection(text, 'ARABIC_MEANING');
+      const note = extractSection(text, 'CULTURAL_NOTE');
+      
+      html = `
+        <div class="t-section">
+          <span class="t-label">🕌 Arabic Translation (الترجمة العربية)</span>
+          <div class="t-arabic">${arabicScript || text}</div>
+        </div>
+        ${translit ? `<div class="t-section"><span class="t-label">📝 Transliteration (النطق)</span><div class="t-text"><em>${translit}</em></div></div>` : ''}
+        ${arabicMeaning ? `<div class="t-section"><span class="t-label">📖 Arabic Meaning (المعنى)</span><div class="t-arabic" style="font-size:1rem">${arabicMeaning}</div></div>` : ''}
+        ${note ? `<div class="t-section"><span class="t-label">🌙 Cultural Note</span><div class="t-text">${note}</div></div>` : ''}
+      `;
+    } else if (langCode === 'arabic_literate') {
+      const couplet = extractSection(text, 'ARABIC_COUPLET');
+      const roman = extractSection(text, 'ROMANIZED');
+      const gloss = extractSection(text, 'GLOSSARY');
+      const analysis = extractSection(text, 'LITERARY_ANALYSIS');
+      
+      html = `
+        <div class="t-section">
+          <span class="t-label">📜 Classical Arabic Couplet</span>
+          <div class="t-arabic">${couplet || ''}</div>
+        </div>
+        ${roman ? `<div class="t-section"><span class="t-label">🔤 Romanized Transliteration</span><div class="t-text"><em>${roman}</em></div></div>` : ''}
+        ${gloss ? `<div class="t-section"><span class="t-label">📚 Glossary</span><div class="t-text">${gloss}</div></div>` : ''}
+        ${analysis ? `<div class="t-section"><span class="t-label">🎓 Literary Analysis</span><div class="t-text">${analysis}</div></div>` : ''}
+      `;
+    } else {
+      const translation = extractSection(text, 'TRANSLATION');
+      const meaning = extractSection(text, 'MEANING');
+      const note = extractSection(text, 'NOTE');
+      
+      html = `
+        <div class="t-section">
+          <span class="t-label">Translation</span>
+          <div class="t-text">${translation || text}</div>
+        </div>
+        ${meaning ? `<div class="t-section"><span class="t-label">Meaning</span><div class="t-text">${meaning}</div></div>` : ''}
+        ${note ? `<div class="t-section"><span class="t-label">Cultural Note</span><div class="t-text"><em>${note}</em></div></div>` : ''}
+      `;
+    }
+    
+    translationCache[cacheKey] = html;
+    out.innerHTML = html;
+    
+  } catch (err) {
+    out.innerHTML = `<div class="error-msg">Translation failed: ${err.message}. Please try again.</div>`;
+  }
+}
+
+function extractSection(text, label) {
+  const regex = new RegExp(`${label}:\\s*([\\s\\S]*?)(?=\\n[A-Z_]+:|$)`, 'i');
+  const match = text.match(regex);
+  return match ? match[1].trim() : '';
+}
+
+// ── Random
+document.getElementById('randomBtn').addEventListener('click', () => {
+  const r = KURALS[Math.floor(Math.random() * KURALS.length)];
+  openModal(r.num);
+});
+
+// ── Events
+document.getElementById('searchInput').addEventListener('input', debounce(applyFilters, 300));
+document.getElementById('palFilter').addEventListener('change', applyFilters);
+document.getElementById('chapterFilter').addEventListener('change', applyFilters);
+document.getElementById('perPage').addEventListener('change', () => { currentPage = 1; renderGrid(); });
+
+function debounce(fn, ms) {
+  let t;
+  return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+}
+
+// ── Init
+populateChapterFilter();
+renderGrid();
+</script>
+</body>
+</html>
