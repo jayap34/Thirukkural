@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Thirukkural · Trilingual Reader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+Tamil:wght@400;500;600;700&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#05101e; --bg2:#081728; --panel:#0f2640; --panel2:#13304e;
+  --line:#1e3d5c; --line2:#2a5278;
+  --gold:#c8a84b; --gold-lt:#e2c878;
+  --accent:#4a9eff; --teal:#2ab5b5;
+  --ink:#e8f0f8; --ink2:#b8cce0; --ink3:#7d99b5;
+  --arabic-ink:#f0e6cc;
+  --card:rgba(255,255,255,.025); --card-line:#1c3954;
+  --shadow:0 18px 50px -22px rgba(0,0,0,.7);
+  --book-v:#d96d6d; --book-w:#37c0c0; --book-l:#d9b24a;
+}
+body[data-theme="light"]{
+  --bg:#f4eee1; --bg2:#efe7d6; --panel:#fbf7ee; --panel2:#f6efe0;
+  --line:#e2d6bd; --line2:#d2c19c;
+  --gold:#9a7d2e; --gold-lt:#7a6224;
+  --accent:#2f6f4f; --teal:#1f7a7a;
+  --ink:#241c10; --ink2:#5a4d38; --ink3:#8b7c61;
+  --arabic-ink:#2c2414;
+  --card:#fffdf7; --card-line:#e7dcc4;
+  --shadow:0 16px 40px -24px rgba(80,60,20,.35);
+  --book-v:#a23b3b; --book-w:#1f7a7a; --book-l:#9a7d2e;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  min-height:100vh; -webkit-font-smoothing:antialiased; transition:background .3s,color .3s;
+}
+body::before{content:'';position:fixed;inset:0;z-index:-2;
+  background:radial-gradient(ellipse 90% 45% at 50% -8%, color-mix(in oklab,var(--accent) 14%, transparent) 0%, transparent 60%),
+             radial-gradient(ellipse 60% 40% at 100% 110%, color-mix(in oklab,var(--gold) 10%, transparent) 0%, transparent 55%), var(--bg);}
+
+/* ---------- HEADER ---------- */
+header{text-align:center;padding:2.6rem 1rem 1.6rem;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+header::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,transparent,var(--gold),var(--accent),var(--teal),var(--gold),transparent)}
+.kicker{font-family:'Playfair Display',serif;font-size:.72rem;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);display:inline-block;
+  border:1px solid color-mix(in oklab,var(--gold) 45%,transparent);border-radius:30px;padding:.3rem 1rem;margin-bottom:1rem}
+header h1{font-family:'Noto Serif Tamil',serif;font-size:clamp(2.1rem,6vw,3.6rem);font-weight:700;line-height:1.05}
+header .h-en{font-family:'Playfair Display',serif;font-size:clamp(1rem,2.6vw,1.5rem);color:var(--gold-lt);letter-spacing:.22em;margin-top:.45rem;font-weight:500}
+header .h-ar{font-family:'Amiri',serif;font-size:clamp(1.3rem,3.4vw,2rem);color:var(--arabic-ink);margin-top:.4rem;direction:rtl}
+header .h-sub{color:var(--ink3);font-size:.86rem;margin-top:1rem;font-style:italic;max-width:46ch;margin-inline:auto;line-height:1.6}
+
+/* ---------- CONTROL BAR ---------- */
+.bar-wrap{position:sticky;top:0;z-index:40;background:color-mix(in oklab,var(--bg) 92%, transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.bar{max-width:1080px;margin:0 auto;padding:.7rem 1.1rem;display:flex;gap:.55rem;align-items:center;flex-wrap:wrap}
+.books{display:flex;gap:.3rem;flex-wrap:wrap}
+.bk{padding:.42rem .85rem;border-radius:30px;border:1px solid var(--line);background:var(--card);color:var(--ink3);
+  font-size:.8rem;cursor:pointer;transition:.18s;font-weight:500;white-space:nowrap}
+.bk:hover{color:var(--ink2);border-color:var(--line2)}
+.bk.on{color:var(--bg);font-weight:600}
+.bk.on[data-b="all"]{background:var(--gold);border-color:var(--gold)}
+.bk.on[data-b="1"]{background:var(--book-v);border-color:var(--book-v);color:#fff}
+.bk.on[data-b="2"]{background:var(--book-w);border-color:var(--book-w);color:#04201f}
+.bk.on[data-b="3"]{background:var(--book-l);border-color:var(--book-l);color:#241c00}
+.search{flex:1;min-width:160px;position:relative}
+.search input{width:100%;padding:.5rem .9rem .5rem 2.2rem;border:1px solid var(--line);border-radius:8px;
+  background:var(--card);color:var(--ink);font-size:.86rem;outline:none;font-family:inherit;transition:.18s}
+.search input:focus{border-color:var(--accent)}
+.search input::placeholder{color:var(--ink3)}
+.search .si{position:absolute;left:.7rem;top:50%;transform:translateY(-50%);color:var(--ink3);pointer-events:none}
+select.chsel{padding:.5rem 2rem .5rem .8rem;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);
+  font-size:.82rem;font-family:inherit;cursor:pointer;outline:none;appearance:none;max-width:240px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237d99b5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .7rem center}
+select.chsel:focus{border-color:var(--accent)}
+select.chsel option{background:var(--panel);color:var(--ink)}
+.gear{display:flex;align-items:center;gap:.4rem;padding:.5rem .9rem;border:1px solid var(--line);border-radius:8px;background:var(--card);
+  color:var(--ink2);font-size:.82rem;cursor:pointer;transition:.18s;font-weight:500;white-space:nowrap}
+.gear:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ---------- MAIN ---------- */
+main{max-width:920px;margin:0 auto;padding:1.6rem 1.1rem 5rem}
+.ch-head{text-align:center;padding:2rem 1rem 1.4rem;border-bottom:1px solid var(--line);margin-bottom:1.8rem}
+.ch-book{font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;font-weight:600;margin-bottom:.7rem;
+  display:inline-flex;gap:.5rem;align-items:center}
+.ch-book .dot{width:7px;height:7px;border-radius:50%}
+.ch-no{font-family:'Playfair Display',serif;font-style:italic;color:var(--ink3);font-size:.92rem;margin-bottom:.2rem}
+.ch-ta{font-family:'Noto Serif Tamil',serif;font-size:clamp(1.5rem,4vw,2.1rem);font-weight:600;line-height:1.2}
+.ch-en{font-family:'Playfair Display',serif;color:var(--gold-lt);font-size:1.05rem;letter-spacing:.04em;margin-top:.25rem}
+.ch-ar{font-family:'Amiri',serif;color:var(--arabic-ink);font-size:1.4rem;direction:rtl;margin-top:.2rem}
+
+.cards{display:flex;flex-direction:column;gap:1.15rem}
+.card{background:var(--card);border:1px solid var(--card-line);border-radius:14px;padding:1.5rem 1.6rem;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);opacity:.5}
+.card[data-b="1"]::before{background:var(--book-v)} .card[data-b="2"]::before{background:var(--book-w)} .card[data-b="3"]::before{background:var(--book-l)}
+.k-top{display:flex;align-items:baseline;gap:.8rem;margin-bottom:1.1rem}
+.k-num{font-family:'Playfair Display',serif;font-weight:700;font-size:1.5rem;color:var(--gold)}
+.k-ref{font-size:.74rem;color:var(--ink3);letter-spacing:.02em}
+.k-ref b{color:var(--ink2);font-weight:600}
+
+.layer{padding:.62rem 0;border-top:1px dashed color-mix(in oklab,var(--line) 70%,transparent)}
+.layer:first-of-type{border-top:none;padding-top:0}
+.lab{display:flex;align-items:center;gap:.5rem;margin-bottom:.35rem}
+.lab .tag{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--ink3)}
+.lab .chip{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.12rem .45rem;border-radius:20px;
+  border:1px solid var(--line2);color:var(--ink3);white-space:nowrap}
+.lab .tag{white-space:nowrap}
+.txt{font-size:1.04rem;line-height:1.62;color:var(--ink);white-space:pre-line}
+.l-ta .txt{font-family:'Noto Serif Tamil',serif;font-size:1.34rem;line-height:1.7;font-weight:500}
+.l-tr .txt{font-style:italic;color:var(--ink2);font-size:1rem}
+.l-mta .txt{font-family:'Noto Serif Tamil',serif;font-size:1.12rem;color:var(--ink2)}
+.l-env .txt{font-family:'Playfair Display',serif;font-style:italic;font-size:1.12rem;color:var(--ink)}
+.l-ven .txt{color:var(--ink2)}
+.l-var{text-align:right}
+.l-var .lab{flex-direction:row-reverse}
+.l-var .txt{font-family:'Amiri',serif;direction:rtl;font-size:1.6rem;line-height:2.05;color:var(--arabic-ink)}
+
+.pager{display:flex;justify-content:space-between;gap:1rem;margin-top:2.2rem}
+.pbtn{flex:1;padding:.85rem 1rem;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink2);
+  cursor:pointer;font-family:inherit;font-size:.85rem;transition:.18s;text-align:left}
+.pbtn:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.pbtn:disabled{opacity:.35;cursor:default}
+.pbtn .pl{display:block;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin-bottom:.2rem}
+.pbtn.next{text-align:right}
+.empty{text-align:center;color:var(--ink3);padding:4rem 1rem;font-style:italic}
+.count{text-align:center;color:var(--ink3);font-size:.78rem;letter-spacing:.04em;margin-bottom:1.4rem}
+
+/* ---------- SETTINGS DRAWER ---------- */
+.scrim{position:fixed;inset:0;background:rgba(2,8,18,.6);backdrop-filter:blur(3px);z-index:60;opacity:0;pointer-events:none;transition:opacity .25s}
+.scrim.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(420px,92vw);background:var(--panel);border-left:1px solid var(--line2);z-index:70;
+  transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);overflow-y:auto;box-shadow:-20px 0 60px -20px rgba(0,0,0,.6)}
+.drawer.open{transform:translateX(0)}
+.dr-head{display:flex;align-items:center;justify-content:space-between;padding:1.3rem 1.4rem;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--panel);z-index:1}
+.dr-head h2{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:600}
+.dr-head .x{width:34px;height:34px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink2);cursor:pointer;font-size:1.1rem;line-height:1}
+.dr-head .x:hover{border-color:var(--accent);color:var(--accent)}
+.sect{padding:1.3rem 1.4rem;border-bottom:1px solid var(--line)}
+.sect h3{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem;font-weight:700}
+.sect .hint{font-size:.76rem;color:var(--ink3);margin-bottom:1rem;line-height:1.5}
+.opt{display:flex;align-items:center;gap:.85rem;padding:.7rem .9rem;border:1px solid var(--line);border-radius:10px;margin-bottom:.55rem;cursor:pointer;transition:.16s;background:var(--card)}
+.opt:hover{border-color:var(--line2)}
+.opt.on{border-color:var(--accent);background:color-mix(in oklab,var(--accent) 12%, var(--card))}
+.opt .box{width:20px;height:20px;border-radius:6px;border:2px solid var(--line2);flex-shrink:0;display:grid;place-items:center;transition:.16s}
+.opt.on .box{background:var(--accent);border-color:var(--accent)}
+.opt .box svg{opacity:0;transition:.16s} .opt.on .box svg{opacity:1}
+.opt .ol{flex:1}
+.opt .ol .name{font-size:.9rem;font-weight:600;color:var(--ink)}
+.opt .ol .desc{font-size:.74rem;color:var(--ink3);margin-top:.1rem}
+.opt .samp{font-size:1rem;color:var(--ink3);flex-shrink:0}
+.opt .samp.ta{font-family:'Noto Serif Tamil',serif} .opt .samp.ar{font-family:'Amiri',serif;font-size:1.2rem}
+.seg{display:flex;gap:.5rem}
+.seg button{flex:1;padding:.7rem;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink2);cursor:pointer;
+  font-family:inherit;font-size:.85rem;font-weight:600;transition:.16s;display:flex;align-items:center;justify-content:center;gap:.45rem}
+.seg button.on{border-color:var(--accent);background:color-mix(in oklab,var(--accent) 14%, var(--card));color:var(--ink)}
+.sw{width:14px;height:14px;border-radius:50%;border:1px solid var(--line2)}
+.sw.d{background:#0a1a30} .sw.l{background:#f4eee1}
+.slider-row{display:flex;align-items:center;gap:.9rem}
+.slider-row input[type=range]{flex:1;accent-color:var(--accent)}
+.slider-row .val{font-variant-numeric:tabular-nums;font-size:.82rem;color:var(--ink2);min-width:3ch;text-align:right}
+.reset{width:100%;padding:.75rem;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink3);
+  cursor:pointer;font-family:inherit;font-size:.82rem;transition:.16s}
+.reset:hover{border-color:var(--book-v);color:var(--book-v)}
+.dr-foot{padding:1.2rem 1.4rem;color:var(--ink3);font-size:.72rem;line-height:1.6;font-style:italic}
+@media(max-width:560px){.card{padding:1.2rem 1.1rem}.bar{padding:.6rem .7rem}}
+
+/* ---------- FRONT MATTER ---------- */
+.front{max-width:1080px;margin:1.2rem auto 0;padding:0 1.1rem;display:flex;flex-direction:column;gap:.6rem}
+.fm{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+.fm-tog{width:100%;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.85rem 1.1rem;border:none;cursor:pointer;
+  background:linear-gradient(135deg, color-mix(in oklab,var(--gold) 13%,transparent), color-mix(in oklab,var(--accent) 6%,transparent));
+  font-family:'Playfair Display',serif;color:var(--gold-lt);font-size:.95rem;transition:.2s;text-align:left}
+.fm-tog:hover{filter:brightness(1.12)}
+.fm[data-accent="teal"] .fm-tog{background:linear-gradient(135deg, color-mix(in oklab,var(--teal) 14%,transparent), color-mix(in oklab,var(--accent) 6%,transparent));color:var(--teal)}
+.fm-tog .lft{display:flex;align-items:center;gap:.6rem}
+.fm-tog .rgt{display:flex;align-items:center;gap:.45rem;font-size:.72rem;color:var(--ink3);font-style:italic;font-family:inherit}
+.fm-arrow{transition:transform .25s;font-size:.62rem;font-style:normal}
+.fm.open .fm-arrow{transform:rotate(180deg)}
+.fm-body{display:none;border-top:1px solid var(--line)}
+.fm.open .fm-body{display:block}
+.fm-langs{display:flex;border-bottom:1px solid var(--line);background:color-mix(in oklab,var(--bg) 55%,transparent)}
+.fm-lang{flex:1;padding:.55rem;border:none;background:transparent;color:var(--ink3);cursor:pointer;font-family:inherit;font-size:.82rem;border-bottom:2px solid transparent;transition:.18s}
+.fm-lang:hover{color:var(--ink2)}
+.fm-lang.on{color:var(--gold-lt);border-bottom-color:var(--gold);background:color-mix(in oklab,var(--gold) 8%,transparent)}
+.fm-pane{display:none;padding:1.6rem 1.8rem}
+.fm-pane.on{display:block}
+.fm-pane.rtl{direction:rtl;text-align:right}
+.fm-h{font-family:'Playfair Display',serif;color:var(--gold-lt);font-size:1.15rem;margin-bottom:1rem;font-weight:600}
+.fm-h.ta{font-family:'Noto Serif Tamil',serif}.fm-h.ar{font-family:'Amiri',serif;font-size:1.45rem}
+.fm-p{font-size:.92rem;line-height:1.85;color:var(--ink2);margin-bottom:.8rem;font-family:'Playfair Display',serif}
+.fm-p.ta{font-family:'Noto Serif Tamil',serif;line-height:2.05;font-size:.9rem}
+.fm-p.ar{font-family:'Amiri',serif;font-size:1.18rem;line-height:2.15;color:var(--arabic-ink)}
+.fm-q{border-inline-start:3px solid var(--gold);padding:.5rem 1rem;margin:.85rem 0;background:color-mix(in oklab,var(--gold) 8%,transparent);border-radius:0 6px 6px 0}
+.fm-pane.rtl .fm-q{border-radius:6px 0 0 6px}
+.fm-q .kta{font-family:'Noto Serif Tamil',serif;color:var(--ink);font-weight:600;font-size:1rem}
+.fm-q .ken{font-size:.82rem;color:var(--ink3);font-style:italic;margin-top:.2rem}
+.fm-lead{margin:.4rem 0;padding-bottom:.45rem;border-bottom:1px solid var(--line)}
+.fm-lead .nm{color:var(--gold-lt);font-weight:600;font-family:'Playfair Display',serif;font-size:.92rem}
+.fm-lead .ds{color:var(--ink3);font-style:italic;font-size:.82rem;margin-top:.1rem}
+.fm-sig{margin-top:1.2rem;padding-top:.8rem;border-top:1px solid var(--line);color:var(--gold-lt);font-size:.82rem;line-height:1.7;font-style:italic;text-align:end}
+.fm-sig.ta{font-family:'Noto Serif Tamil',serif;font-style:normal}
+.fm-emblem{text-align:center;font-size:1.5rem;color:var(--gold);margin-bottom:.7rem}
+.fm-ded{text-align:center;font-family:'Playfair Display',serif;line-height:1.95;color:var(--ink2);font-size:.92rem;max-width:62ch;margin:0 auto}
+.fm-ded.ta{font-family:'Noto Serif Tamil',serif;line-height:2.1}.fm-ded.ar{font-family:'Amiri',serif;font-size:1.12rem;line-height:2.15;color:var(--arabic-ink)}
+.gal-intro{padding:1.3rem 1.8rem .2rem;color:var(--ink3);font-style:italic;font-size:.9rem;text-align:center;font-family:'Playfair Display',serif}
+.gal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1rem;padding:1.2rem 1.8rem 1.8rem}
+.gal-card{border:1px solid var(--card-line);border-radius:10px;overflow:hidden;background:color-mix(in oklab,var(--bg) 45%,transparent)}
+.gal-card img{width:100%;height:185px;object-fit:cover;display:block;background:var(--panel2)}
+.gal-card.cover{grid-column:1/-1}
+.gal-card.cover img{height:auto;max-height:520px;object-fit:contain;background:var(--bg2);padding:.6rem}
+.gal-cap{padding:.75rem .9rem}
+.gal-cap .t{font-family:'Playfair Display',serif;color:var(--gold-lt);font-size:.88rem;font-weight:600;margin-bottom:.22rem}
+.gal-cap .s{color:var(--ink3);font-size:.75rem;line-height:1.5}
+
+/* ---------- PRINT CONTROLS (settings) ---------- */
+.plabel{display:block;font-size:.8rem;color:var(--ink2);margin-bottom:.4rem;font-weight:600}
+.psel{width:100%;padding:.6rem .8rem;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-family:inherit;font-size:.86rem;cursor:pointer;outline:none;appearance:none;margin-bottom:1.1rem;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237d99b5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .7rem center}
+.psel:focus{border-color:var(--accent)} .psel option{background:var(--panel);color:var(--ink)}
+.pbtn-print{width:100%;padding:.72rem;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600;transition:.16s;margin-top:.5rem;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.pbtn-print:hover{border-color:var(--gold);color:var(--gold-lt);background:color-mix(in oklab,var(--gold) 12%,var(--card))}
+
+/* ---------- NATIVE PRINT FALLBACK ---------- */
+@media print{
+  :root,body[data-theme]{--bg:#fff;--bg2:#fff;--panel:#fff;--line:#ddd;--line2:#ccc;--ink:#111;--ink2:#333;--ink3:#666;--card:#fff;--card-line:#ccc;--arabic-ink:#000;--gold-lt:#8a6d1e}
+  body::before{display:none!important}
+  .bar-wrap,.drawer,.scrim,.front,.pager,.kicker,header .h-sub{display:none!important}
+  .card{break-inside:avoid;box-shadow:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <span class="kicker">Wisdom Meets Vision</span>
+  <h1>திருக்குறள்</h1>
+  <div class="h-en">THIRUKKURAL</div>
+  <div class="h-ar">ثيروكورال</div>
+  <p class="h-sub">A trilingual edition of Thiruvalluvar's 1,330 couplets — choose your languages in <strong style="color:var(--gold-lt);font-style:normal">Settings</strong>.</p>
+</header>
+
+<!-- FRONT MATTER -->
+<div class="front">
+
+  <div class="fm" id="fmForeword">
+    <button class="fm-tog"><span class="lft">📜 Foreword · முன்னுரை · المقدمة</span><span class="rgt">read<span class="fm-arrow">▼</span></span></button>
+    <div class="fm-body">
+      <div class="fm-langs">
+        <button class="fm-lang on" data-pane="fw-en">English</button>
+        <button class="fm-lang" data-pane="fw-ta">தமிழ்</button>
+        <button class="fm-lang" data-pane="fw-ar">العربية</button>
+      </div>
+      <div class="fm-pane on" id="fw-en">
+        <div class="fm-h">Foreword</div>
+        <p class="fm-p">The United Arab Emirates rises today as a land where dreams ascend like dawn over golden sands, where unity shapes destiny, and where the wisdom of leaders illuminates every horizon.</p>
+        <p class="fm-p">At the heart of this nation stands <strong style="color:var(--gold-lt)">Sheikh Zayed bin Sultan Al Nahyan</strong>, whose compassion flowed like an endless spring and whose vision transformed a desert into a garden of hope.</p>
+        <div class="fm-lead"><div class="nm">Sheikh Mohammed bin Rashid Al Maktoum</div><div class="ds">— whose imagination turns possibility into achievement.</div></div>
+        <div class="fm-lead"><div class="nm">Sheikh Mohamed bin Zayed Al Nahyan</div><div class="ds">— whose courage and clarity guide the nation with noble strength.</div></div>
+        <p class="fm-p" style="margin-top:.85rem">Centuries before this modern miracle, the Tamil sage <strong style="color:var(--gold-lt)">Thiruvalluvar</strong> offered humanity the timeless scripture of virtue — the <em>Thirukkural</em>, 1,330 couplets distilled into the essence of righteous living.</p>
+        <div class="fm-q"><div class="kta">அரசன் நீதியால் உலகம் நிலைபெறும்.</div><div class="ken">On Just Leadership — “The world stands firm beneath the feet of the just ruler.”</div></div>
+        <div class="fm-q"><div class="kta">கருணையே அறத்தின் முதல்வன்.</div><div class="ken">On Compassion — “Compassion is the root of all noble qualities.”</div></div>
+        <p class="fm-p">As we honor the UAE’s journey, we honor also the eternal wisdom that reminds us that true progress is built on virtue, justice, compassion, and the upliftment of all humanity.</p>
+        <div class="fm-sig">Dr. Jayaprakash Ponraj · Digital Heritage Contributor · Abu Dhabi, UAE · May 2026</div>
+      </div>
+      <div class="fm-pane" id="fw-ta">
+        <div class="fm-h ta">முன்னுரை</div>
+        <p class="fm-p ta">மணற்குன்றின் மேல் உதிக்கும் விடியல்போல் கனவுகள் நனவாகும் தேசம் — ஒற்றுமை வலிமையாகும் நிலம் — ஞானம் ஒவ்வொரு திசையையும் ஒளிரச் செய்கிறது — அதுவே ஐக்கிய அரபு எமிரேட்ஸ்.</p>
+        <p class="fm-p ta">இந்த நாட்டின் இதயத்தில் நிற்பவர் <strong style="color:var(--gold-lt)">ஷேக் ஸாயித் பின் சுல்தான் அல் நஹ்யான்</strong>. அவரின் கருணை முடிவில்லா ஊற்றாக ஓடியது; அவரின் பார்வை பாலைவனத்தை நம்பிக்கையின் தோட்டமாக மாற்றியது.</p>
+        <div class="fm-q"><div class="kta">கருணையே அறத்தின் முதல்வன்.</div><div class="ken ta">கருணையே அறத்தின் அடிப்பனை.</div></div>
+        <p class="fm-p ta">நூற்றாண்டுகளுக்கு முன், தமிழின் மாமுனிவர் <strong style="color:var(--gold-lt)">திருவள்ளுவர்</strong> திருக்குறள் எனும் பொக்கிசத்தில் 1330 குறள்களால் அறத்தின் சாரத்தை உலகிற்கு வழங்கினார்.</p>
+        <div class="fm-sig ta">Dr ஜெயபிரகாஸ் பொன்ராஷ் · அபுதாபி · மே 2026</div>
+      </div>
+      <div class="fm-pane rtl" id="fw-ar">
+        <div class="fm-h ar">المقدمة</div>
+        <p class="fm-p ar">تنهض دولة الإمارات العربية المتحدة كقصيدة تُكتب على صفحة الصحراء، حيث تتحول الأحلام إلى واقع، وتصبح الوحدة قوة، وتصنع القيادة الحكيمة مستقبلاً يفيض بالنور.</p>
+        <p class="fm-p ar">وفي قلب هذا الوطن يقف <strong style="color:var(--gold-lt)">الشيخ زايد بن سلطان آل نهيان</strong>، قائد فاضت رحمته كنبع لا ينضب، وتحولت رؤيته إلى حدائق من الأمل.</p>
+        <p class="fm-p ar">قبل قرون من هذا المجد الحديث، قدّم الحكيم التاميلي <strong style="color:var(--gold-lt)">ثيروفاللوفار</strong> كتابه الخالد التيروكّورال، جامعاً فيه 1330 بيتاً من جوهر الفضيلة.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="fm" id="fmDed">
+    <button class="fm-tog"><span class="lft">✦ Dedication · அர்ப்பணிப்பு · الإهداء</span><span class="rgt">read<span class="fm-arrow">▼</span></span></button>
+    <div class="fm-body">
+      <div class="fm-langs">
+        <button class="fm-lang on" data-pane="ded-en">English</button>
+        <button class="fm-lang" data-pane="ded-ta">தமிழ்</button>
+        <button class="fm-lang" data-pane="ded-ar">العربية</button>
+      </div>
+      <div class="fm-pane on" id="ded-en">
+        <div class="fm-emblem">✦</div>
+        <div class="fm-ded">To H.H. Sheikh Zayed bin Sultan Al Nahyan<br/>Father of the Nation · Founder of the UAE 🇦🇪<br/><br/>With profound respect and heartfelt gratitude, this work is dedicated to the noble legacy of a leader whose vision transformed a desert into a home for the world, whose compassion uplifted every community, and whose wisdom continues to guide generations.<br/><br/>His life was a living testament to the values that Thiruvalluvar wrote about more than two millennia ago — justice, compassion, humility, and righteous leadership.<br/><br/><em>His memory is a blessing. His vision is a guiding star.</em></div>
+      </div>
+      <div class="fm-pane" id="ded-ta">
+        <div class="fm-emblem">✦</div>
+        <div class="fm-ded ta">மாண்புமிகு ஷேக் ஸாயித் பின் சுல்தான் அல் நஹ்யான் அவர்களுக்கு<br/>தேசத்தின் தந்தை · ஐக்கிய அரபு எமிரேட்ஸின் நிறுவனர் 🇦🇪<br/><br/>ஆழமான மரியாதையுடனும் நன்றியுடனும், பாலைவனத்தை உலகின் இல்லமாக மாற்றிய தலைவரின் உன்னத மரபிற்கு இந்த நூல் அர்ப்பணிக்கப்படுகிறது.<br/><br/><em>அவரின் நினைவு ஒரு ஆசீர்வாதம். அவரின் தொலைநோக்கு ஒரு வழிகாட்டும் நட்சத்திரம்.</em></div>
+      </div>
+      <div class="fm-pane rtl" id="ded-ar">
+        <div class="fm-emblem">✦</div>
+        <div class="fm-ded ar">إلى سمو الشيخ زايد بن سلطان آل نهيان<br/>والد الأمة · مؤسس الإمارات العربية المتحدة 🇦🇪<br/><br/>بعميق الاحترام وصادق الامتنان، يُهدى هذا العمل إلى الإرث النبيل لقائد حوّلت رؤيته الصحراء إلى موطن للعالم، وما زالت حكمته تهدي الأجيال.<br/><br/><em>ذكراه باركة. رؤيته نجم يهدي المسير.</em></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fm" id="fmGallery" data-accent="teal">
+    <button class="fm-tog"><span class="lft">📷 Heritage Gallery — Tamil Nadu &amp; the UAE</span><span class="rgt">view<span class="fm-arrow">▼</span></span></button>
+    <div class="fm-body">
+      <p class="gal-intro">A visual bridge between two ancient civilizations — the Tamil heartland and the golden sands of Arabia.</p>
+      <div class="gal-grid">
+        <div class="gal-card cover"><img src="assets/photos/cover.png" alt="Thirukkural — Wisdom Meets Vision cover" loading="lazy"/><div class="gal-cap"><div class="t">Wisdom Meets Vision — Book Cover</div><div class="s">The cover of this trilingual edition, dedicated to H.H. Sheikh Zayed bin Sultan Al Nahyan.</div></div></div>
+        <div class="gal-card"><img src="assets/photos/thiruvalluvar.jpg" alt="Thiruvalluvar Statue" loading="lazy"/><div class="gal-cap"><div class="t">Thiruvalluvar Statue, Kanyakumari</div><div class="s">The 133-foot statue at India’s southern tip — representing the 133 chapters of the Thirukkural.</div></div></div>
+        <div class="gal-card"><img src="assets/photos/madurai.jpg" alt="Meenakshi Amman Temple" loading="lazy"/><div class="gal-cap"><div class="t">Meenakshi Amman Temple, Madurai</div><div class="s">Ancient Dravidian temple where Tamil literature and the Sangam tradition flourished.</div></div></div>
+        <div class="gal-card"><img src="assets/photos/manuscript.jpg" alt="Palm-leaf manuscript" loading="lazy"/><div class="gal-cap"><div class="t">Palm-Leaf Manuscript</div><div class="s">Inscribed by stylus on dried palm leaves — how 2,000 years of wisdom survived.</div></div></div>
+        <div class="gal-card"><img src="assets/photos/mosque.jpg" alt="Sheikh Zayed Grand Mosque" loading="lazy"/><div class="gal-cap"><div class="t">Sheikh Zayed Grand Mosque, Abu Dhabi</div><div class="s">Named after the Founder of the UAE — embodying his vision of unity and grandeur.</div></div></div>
+        <div class="gal-card"><img src="assets/photos/abudhabi.jpg" alt="Abu Dhabi at night" loading="lazy"/><div class="gal-cap"><div class="t">Abu Dhabi at Night</div><div class="s">The capital where ancient wisdom and modern vision unite.</div></div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="bar-wrap">
+  <div class="bar">
+    <div class="books" id="books"></div>
+    <div class="search"><span class="si">🔍</span><input id="q" type="text" placeholder="Search Tamil, English, Arabic…" /></div>
+    <select class="chsel" id="chsel"></select>
+    <button class="gear" id="printBtn">🖨 <span>Print</span></button>
+    <button class="gear" id="gear">⚙ <span>Settings</span></button>
+  </div>
+</div>
+
+<main id="main"></main>
+
+<!-- Settings -->
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Settings">
+  <div class="dr-head"><h2>Settings</h2><button class="x" id="closeDr">✕</button></div>
+  <div class="sect">
+    <h3>Languages &amp; Content</h3>
+    <div class="hint">Pick any combination to display for each kural. Your choices are saved on this device.</div>
+    <div id="layerOpts"></div>
+  </div>
+  <div class="sect">
+    <h3>Theme</h3>
+    <div class="hint">Reading appearance.</div>
+    <div class="seg" id="themeSeg">
+      <button data-theme="dark"><span class="sw d"></span> Dark</button>
+      <button data-theme="light"><span class="sw l"></span> Light</button>
+    </div>
+  </div>
+  <div class="sect">
+    <h3>Text size</h3>
+    <div class="slider-row">
+      <input type="range" id="fontRange" min="85" max="130" step="5" />
+      <span class="val" id="fontVal">100%</span>
+    </div>
+  </div>
+  <div class="sect" id="printSect">
+    <h3>Print &amp; PDF</h3>
+    <div class="hint">Printed pages use the languages selected above. Choose how many kurals per page, then print or save as PDF from the print dialog.</div>
+    <label class="plabel">Kurals per page</label>
+    <select class="psel" id="perPage">
+      <option value="1">1 per page</option>
+      <option value="2">2 per page</option>
+      <option value="3">3 per page</option>
+      <option value="5">5 per page</option>
+      <option value="8">8 per page</option>
+      <option value="10">10 per page (full chapter)</option>
+      <option value="0">Flowing — fit as many as possible</option>
+    </select>
+    <label class="plabel">Include front matter (full book &amp; book prints)</label>
+    <div id="frontOpts"></div>
+    <button class="pbtn-print" data-scope="chapter">🖨 Print this chapter</button>
+    <button class="pbtn-print" data-scope="book">🖨 Print this book</button>
+    <button class="pbtn-print" data-scope="all">🖨 Print entire work (1,330)</button>
+  </div>
+  <div class="sect">
+    <button class="reset" id="resetBtn">Reset to defaults</button>
+  </div>
+  <div class="dr-foot">Tamil couplet &amp; commentary by Thiruvalluvar (public domain). Fully-vocalised Modern Standard Arabic translation — scholarly draft. Compiled by Dr. Jayaprakash Ponraj · Abu Dhabi, UAE.</div>
+</aside>
+
+<script src="data/viewer_data.js"></script>
+<script>
+(function(){
+  "use strict";
+  var DATA = window.THIRU || [];
+
+  var LAYERS = [
+    {id:'ta',  tag:'Tamil',              chip:'தமிழ்',     field:'kuralTa',   cls:'l-ta',  samp:'அ', sc:'ta', psc:'ta', desc:'Original couplet'},
+    {id:'tr',  tag:'Transliteration',    chip:'Romanised', field:'translit',  cls:'l-tr',  samp:'Aa', sc:'', psc:'', desc:'How the Tamil sounds'},
+    {id:'mta', tag:'Meaning · Tamil',    chip:'எளிய உரை',  field:'meaningTa', cls:'l-mta', samp:'அ', sc:'ta', psc:'ta', desc:'Easy-to-understand meaning'},
+    {id:'env', tag:'English Verse',      chip:'Poetic',    field:'enVerse',   cls:'l-env', samp:'Aa', sc:'', psc:'en', desc:'Poetic translation'},
+    {id:'ven', tag:'Vocalised English',  chip:'Easy',      field:'vocEn',     cls:'l-ven', samp:'Aa', sc:'', psc:'', desc:'Plain English meaning'},
+    {id:'var', tag:'Vocalised Arabic',   chip:'العربية',   field:'vocAr',     cls:'l-var', samp:'ع', sc:'ar', psc:'ar', desc:'Fully-vocalised Arabic'}
+  ];
+  var DEFAULTS = {layers:{ta:true,tr:true,mta:true,env:false,ven:true,var:true}, theme:'dark', font:100, print:{perPage:5,cover:true,dedication:true,foreword:true}};
+  var KEY='thiru_reader_v1';
+
+  var BOOK_NAME = {1:{en:'Virtue',ta:'அறத்துப்பால்'},2:{en:'Wealth',ta:'பொருட்பால்'},3:{en:'Love',ta:'காமத்துப்பால்'}};
+
+  function load(){ try{ var s=JSON.parse(localStorage.getItem(KEY)); if(s&&s.layers){ s.layers=Object.assign({},DEFAULTS.layers,s.layers); s.print=Object.assign({},DEFAULTS.print,s.print||{}); return Object.assign({},DEFAULTS,s);} }catch(e){} return JSON.parse(JSON.stringify(DEFAULTS)); }
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+  var S = load();
+
+  // chapters index
+  var chapters=[]; var seen={};
+  DATA.forEach(function(r){ if(!seen[r.chNo]){ seen[r.chNo]={chNo:r.chNo,chTa:r.chTa,chEn:r.chEn,chAr:r.chAr,bookNo:r.bookNo,items:[]}; chapters.push(seen[r.chNo]); } seen[r.chNo].items.push(r); });
+  chapters.sort(function(a,b){return a.chNo-b.chNo;});
+
+  var view={book:'all', chNo:1, q:''};
+
+  // ---- build book tabs ----
+  var booksEl=document.getElementById('books');
+  [['all','All'],['1','Virtue'],['2','Wealth'],['3','Love']].forEach(function(b){
+    var btn=document.createElement('button'); btn.className='bk'; btn.dataset.b=b[0]; btn.textContent=b[1];
+    btn.onclick=function(){ view.book=b[0]; view.q=''; document.getElementById('q').value='';
+      var first=chapters.filter(filterBook)[0]; if(first) view.chNo=first.chNo; render(); };
+    booksEl.appendChild(btn);
+  });
+  function filterBook(c){ return view.book==='all' || String(c.bookNo)===view.book; }
+
+  var chsel=document.getElementById('chsel');
+  chsel.onchange=function(){ view.chNo=parseInt(chsel.value,10); view.q=''; document.getElementById('q').value=''; render(); };
+
+  var qIn=document.getElementById('q'); var qT;
+  qIn.oninput=function(){ clearTimeout(qT); qT=setTimeout(function(){ view.q=qIn.value.trim(); render(); },180); };
+
+  // ---- settings UI ----
+  var drawer=document.getElementById('drawer'), scrim=document.getElementById('scrim');
+  function openDr(){ drawer.classList.add('open'); scrim.classList.add('open'); }
+  function closeDr(){ drawer.classList.remove('open'); scrim.classList.remove('open'); }
+  document.getElementById('gear').onclick=openDr;
+  document.getElementById('closeDr').onclick=closeDr;
+  scrim.onclick=closeDr;
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeDr(); });
+
+  var CHECK='<svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 6.2l2.6 2.6L10 3" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var layerOpts=document.getElementById('layerOpts');
+  LAYERS.forEach(function(L){
+    var o=document.createElement('div'); o.className='opt'+(S.layers[L.id]?' on':''); o.dataset.id=L.id;
+    o.innerHTML='<div class="box">'+CHECK+'</div>'+
+      '<div class="ol"><div class="name">'+L.tag+'</div><div class="desc">'+L.desc+'</div></div>'+
+      '<div class="samp '+L.sc+'">'+L.samp+'</div>';
+    o.onclick=function(){
+      var on=!S.layers[L.id];
+      // keep at least one layer on
+      var count=0; for(var k in S.layers) if(S.layers[k]) count++;
+      if(!on && count<=1){ o.animate([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(0)'}],{duration:240}); return; }
+      S.layers[L.id]=on; o.classList.toggle('on',on); save(); render();
+    };
+    layerOpts.appendChild(o);
+  });
+
+  var themeSeg=document.getElementById('themeSeg');
+  themeSeg.querySelectorAll('button').forEach(function(b){
+    b.onclick=function(){ S.theme=b.dataset.theme; applyTheme(); save(); };
+  });
+  function applyTheme(){
+    document.body.setAttribute('data-theme', S.theme);
+    themeSeg.querySelectorAll('button').forEach(function(b){ b.classList.toggle('on', b.dataset.theme===S.theme); });
+  }
+
+  var fontRange=document.getElementById('fontRange'), fontVal=document.getElementById('fontVal');
+  fontRange.oninput=function(){ S.font=parseInt(fontRange.value,10); applyFont(); save(); };
+  function applyFont(){ fontRange.value=S.font; fontVal.textContent=S.font+'%'; document.getElementById('main').style.fontSize=(S.font/100)+'rem'; }
+
+  document.getElementById('resetBtn').onclick=function(){
+    S=JSON.parse(JSON.stringify(DEFAULTS)); save();
+    layerOpts.querySelectorAll('.opt').forEach(function(o){ o.classList.toggle('on', S.layers[o.dataset.id]); });
+    applyTheme(); applyFont(); syncPrintUI(); render();
+  };
+
+  // ---- render ----
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function bookDotColor(b){ return b===1?'var(--book-v)':b===2?'var(--book-w)':'var(--book-l)'; }
+
+  function kuralCard(r){
+    var parts='';
+    LAYERS.forEach(function(L){
+      if(!S.layers[L.id]) return;
+      var v=r[L.field]; if(!v) return;
+      parts+='<div class="layer '+L.cls+'"><div class="lab"><span class="tag">'+L.tag+'</span><span class="chip">'+L.chip+'</span></div><div class="txt">'+esc(v)+'</div></div>';
+    });
+    return '<div class="card" data-b="'+r.bookNo+'"><div class="k-top"><span class="k-num">'+r.kuralNo+'</span>'+
+      '<span class="k-ref">Kural '+r.kuralNo+' · <b>'+esc(r.chEn)+'</b> · Ch '+r.chNo+'</span></div>'+parts+'</div>';
+  }
+
+  function render(){
+    syncBar();
+    var main=document.getElementById('main');
+    if(view.q){ renderSearch(main); return; }
+    var ch=seen[view.chNo]; if(!ch){ main.innerHTML='<div class="empty">Chapter not found.</div>'; return; }
+    var bn=BOOK_NAME[ch.bookNo];
+    var html='<div class="ch-head">'+
+      '<div class="ch-book" style="color:'+bookDotColor(ch.bookNo)+'"><span class="dot" style="background:'+bookDotColor(ch.bookNo)+'"></span>Book '+ch.bookNo+' · '+bn.en+' · '+bn.ta+'</div>'+
+      '<div class="ch-no">Chapter '+ch.chNo+'</div>'+
+      '<div class="ch-ta">'+esc(ch.chTa)+'</div>'+
+      '<div class="ch-en">'+esc(ch.chEn)+'</div>'+
+      '<div class="ch-ar">'+esc(ch.chAr)+'</div></div>';
+    html+='<div class="cards">'+ch.items.map(kuralCard).join('')+'</div>';
+    // pager within filtered book
+    var list=chapters.filter(filterBook); var idx=list.indexOf(ch);
+    var prev=list[idx-1], next=list[idx+1];
+    html+='<div class="pager">'+
+      '<button class="pbtn prev" '+(prev?'':'disabled')+' data-ch="'+(prev?prev.chNo:'')+'"><span class="pl">← Previous</span>'+(prev?('Ch '+prev.chNo+' · '+esc(prev.chEn)):'Start')+'</button>'+
+      '<button class="pbtn next" '+(next?'':'disabled')+' data-ch="'+(next?next.chNo:'')+'"><span class="pl">Next →</span>'+(next?('Ch '+next.chNo+' · '+esc(next.chEn)):'End')+'</button></div>';
+    main.innerHTML=html;
+    main.querySelectorAll('.pbtn[data-ch]').forEach(function(b){ if(b.dataset.ch) b.onclick=function(){ view.chNo=parseInt(b.dataset.ch,10); render(); window.scrollTo({top:0,behavior:'smooth'}); }; });
+  }
+
+  function renderSearch(main){
+    var q=view.q.toLowerCase();
+    var fields=['kuralTa','translit','meaningTa','enVerse','vocEn','vocAr','chEn','chTa','chAr'];
+    var hits=DATA.filter(function(r){
+      if(String(r.kuralNo)===q) return true;
+      for(var i=0;i<fields.length;i++){ var v=r[fields[i]]; if(v && v.toLowerCase().indexOf(q)>=0) return true; }
+      return false;
+    });
+    if(view.book!=='all') hits=hits.filter(function(r){ return String(r.bookNo)===view.book; });
+    if(!hits.length){ main.innerHTML='<div class="empty">No kurals match “'+esc(view.q)+'”.</div>'; return; }
+    var capped=hits.slice(0,200);
+    main.innerHTML='<div class="count">'+hits.length+' result'+(hits.length>1?'s':'')+' for “'+esc(view.q)+'”'+(hits.length>200?' · showing first 200':'')+'</div><div class="cards">'+capped.map(kuralCard).join('')+'</div>';
+  }
+
+  function syncBar(){
+    document.querySelectorAll('.bk').forEach(function(b){ b.classList.toggle('on', b.dataset.b===view.book); });
+    // chapter dropdown for current book
+    var list=chapters.filter(filterBook);
+    chsel.innerHTML=list.map(function(c){ return '<option value="'+c.chNo+'"'+(c.chNo===view.chNo?' selected':'')+'>Ch '+c.chNo+' · '+esc(c.chEn)+'</option>'; }).join('');
+    chsel.style.display=view.q?'none':'';
+  }
+
+  // ---- front matter panels ----
+  document.querySelectorAll('.fm-tog').forEach(function(t){ t.onclick=function(){ t.closest('.fm').classList.toggle('open'); }; });
+  document.querySelectorAll('.fm').forEach(function(fm){
+    var langs=fm.querySelectorAll('.fm-lang'), panes=fm.querySelectorAll('.fm-pane');
+    langs.forEach(function(b){ b.onclick=function(){
+      langs.forEach(function(x){x.classList.remove('on');}); panes.forEach(function(p){p.classList.remove('on');});
+      b.classList.add('on'); var pn=fm.querySelector('#'+b.dataset.pane); if(pn) pn.classList.add('on');
+    };});
+  });
+
+  // ---- print & PDF ----
+  var perPageSel=document.getElementById('perPage');
+  perPageSel.onchange=function(){ S.print.perPage=parseInt(perPageSel.value,10); save(); };
+
+  var FRONT_OPTS=[['cover','Cover page','Wisdom Meets Vision artwork'],['dedication','Dedication','To H.H. Sheikh Zayed'],['foreword','Foreword','Trilingual introduction']];
+  var frontOptsEl=document.getElementById('frontOpts');
+  FRONT_OPTS.forEach(function(it){
+    var o=document.createElement('div'); o.className='opt'+(S.print[it[0]]?' on':''); o.dataset.pk=it[0];
+    o.innerHTML='<div class="box">'+CHECK+'</div><div class="ol"><div class="name">'+it[1]+'</div><div class="desc">'+it[2]+'</div></div>';
+    o.onclick=function(){ S.print[it[0]]=!S.print[it[0]]; o.classList.toggle('on',S.print[it[0]]); save(); };
+    frontOptsEl.appendChild(o);
+  });
+
+  function syncPrintUI(){
+    perPageSel.value=String(S.print.perPage);
+    frontOptsEl.querySelectorAll('.opt').forEach(function(o){ o.classList.toggle('on', !!S.print[o.dataset.pk]); });
+  }
+
+  document.querySelectorAll('.pbtn-print').forEach(function(b){ b.onclick=function(){ buildPrint(b.dataset.scope); }; });
+  document.getElementById('printBtn').onclick=function(){ openDr(); var ps=document.getElementById('printSect'); if(ps) setTimeout(function(){ drawer.scrollTo({top:ps.offsetTop-8,behavior:'smooth'}); },120); };
+
+  function activeLayers(){ return LAYERS.filter(function(L){ return S.layers[L.id]; }); }
+
+  var PRINT_CSS = `*{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Playfair Display',Georgia,serif;color:#1a1407;background:#fff;font-size:11pt;line-height:1.55}
+  .ta{font-family:'Noto Serif Tamil',serif}
+  .ar{font-family:'Amiri',serif;direction:rtl;text-align:right}
+  @page{margin:1.5cm;size:A4}
+  .cover{height:25.5cm;display:flex;align-items:center;justify-content:center;page-break-after:always}
+  .cover img{max-width:100%;max-height:25cm;box-shadow:0 0 0 1px #d9c178}
+  .fpage{page-break-after:always;padding:1cm .6cm}
+  .fpage h2{font-size:21pt;color:#163a5c;text-align:center;font-family:Georgia,'Playfair Display',serif}
+  .fsub{text-align:center;color:#9a7d2e;font-size:12pt;margin:.25rem 0;font-family:'Noto Serif Tamil',serif}
+  .frule{height:1px;background:linear-gradient(90deg,transparent,#c8a84b,transparent);width:50%;margin:.7rem auto 1.5rem}
+  .fp{font-size:11pt;line-height:1.95;margin-bottom:.7rem;max-width:16cm;margin-left:auto;margin-right:auto}
+  .fp.ta{font-family:'Noto Serif Tamil',serif;line-height:2.1}
+  .fp.ar{font-family:'Amiri',serif;font-size:13pt;line-height:2.15;direction:rtl;text-align:right}
+  .pch{text-align:center;border-bottom:2px solid #d9c178;padding:.4rem 0 .7rem;margin:0 0 .8rem}
+  .pch-bk{font-size:8.5pt;letter-spacing:.16em;text-transform:uppercase;color:#9a7d2e;font-family:Georgia,serif}
+  .pch-bk .ta{font-size:10pt}
+  .pch-no{font-style:italic;color:#888;font-size:9.5pt;margin-top:.2rem}
+  .pch-ta{font-family:'Noto Serif Tamil',serif;font-size:16pt;font-weight:600;color:#1a1407;margin-top:.25rem}
+  .pch-en{font-size:11pt;color:#163a5c;margin-top:.1rem}
+  .pch-ar{font-family:'Amiri',serif;font-size:13.5pt;direction:rtl;margin-top:.1rem}
+  .pk{border:1px solid #e6dcc2;border-left:3px solid #c8a84b;border-radius:0 5px 5px 0;padding:.55rem .85rem;margin-bottom:.6rem;page-break-inside:avoid}
+  .pk-h{font-size:8.5pt;color:#9a7d2e;border-bottom:1px dotted #e0d3b0;padding-bottom:.28rem;margin-bottom:.45rem}
+  .pk-h b{color:#1a1407}
+  .pk-n{font-weight:700;color:#c8a84b;font-size:11.5pt;margin-right:.4rem;font-family:Georgia,serif}
+  .pl{margin:.32rem 0}
+  .pl-tag{font-size:7pt;letter-spacing:.13em;text-transform:uppercase;color:#aa9255;margin-bottom:.12rem}
+  .pl-tx{font-size:10.5pt;line-height:1.5;white-space:pre-line;color:#1a1407}
+  .pl-tx.ta{font-family:'Noto Serif Tamil',serif;font-size:12pt;line-height:1.7}
+  .pl-tx.en{font-style:italic}
+  .pl-tx.ar{font-family:'Amiri',serif;font-size:13.5pt;line-height:1.95;direction:rtl;text-align:right}
+  .pfoot{text-align:center;border-top:2px solid #c8a84b;margin-top:1cm;padding-top:.6rem;font-size:8.5pt;color:#888;line-height:1.8}`;
+
+  var DED_PRINT='<div class="fpage"><h2>Dedication</h2><div class="fsub">அர்ப்பணிப்பு · <span class="ar">الإهداء</span></div><div class="frule"></div>'+
+    '<p class="fp" style="text-align:center"><strong>To H.H. Sheikh Zayed bin Sultan Al Nahyan</strong><br/><em>Father of the Nation · Founder of the UAE</em> 🇦🇪</p>'+
+    '<p class="fp" style="text-align:center">With profound respect and heartfelt gratitude, this work is dedicated to the noble legacy of a leader whose vision transformed a desert into a home for the world, whose compassion uplifted every community, and whose wisdom continues to guide generations.</p>'+
+    '<p class="fp ta" style="text-align:center">ஆழ்ந்த மரியாதையுடனும் நன்றியுடனும், பாலைவனத்தை உலகின் இல்லமாக மாற்றிய தலைவரின் உன்னத மரபிற்கு இந்த நூல் அர்ப்பணிக்கப்படுகிறது.</p>'+
+    '<p class="fp ar">بعميق الاحترام وصادق الامتنان، يُهدى هذا العمل إلى الإرث النبيل لقائدٍ حوّلت رؤيته الصحراء إلى موطن للعالم، ولا تزال حكمته تهدي الأجيال.</p></div>';
+
+  var FW_PRINT='<div class="fpage"><h2>Foreword</h2><div class="fsub">முன்னுரை · <span class="ar">المقدمة</span></div><div class="frule"></div>'+
+    '<p class="fp">The United Arab Emirates rises today as a land where dreams ascend like dawn over golden sands, where unity shapes destiny, and where the wisdom of leaders illuminates every horizon. Centuries before this modern miracle, the Tamil sage Thiruvalluvar offered humanity the timeless Thirukkural — 1,330 couplets distilled into the essence of righteous living.</p>'+
+    '<p class="fp ta">நூற்றாண்டுகளுக்கு முன், தமிழ் மாமுனிவர் திருவள்ளுவர் திருக்குறள் எனும் பொக்கிசத்தில் 1330 குறள்களால் அறத்தின் சாரத்தை உலகிற்கு வழங்கினார்.</p>'+
+    '<p class="fp ar">قبل قرون من هذا المجد الحديث، قدّم الحكيم التاميلي ثيروفاللوفار كتابه الخالد التيروكّورال، جامعاً فيه 1330 بيتاً من جوهر الفضيلة.</p></div>';
+
+  function chapterHead(r, brk){
+    var bn=BOOK_NAME[r.bookNo];
+    return '<div class="pch"'+(brk?' style="page-break-before:always"':'')+'>'+
+      '<div class="pch-bk">Book '+r.bookNo+' · '+bn.en+' · <span class="ta">'+esc(bn.ta)+'</span></div>'+
+      '<div class="pch-no">Chapter '+r.chNo+'</div>'+
+      '<div class="pch-ta">'+esc(r.chTa)+'</div>'+
+      '<div class="pch-en">'+esc(r.chEn)+'</div>'+
+      '<div class="pch-ar">'+esc(r.chAr)+'</div></div>';
+  }
+  function kuralPrint(r, layers, brk){
+    var inner='';
+    layers.forEach(function(L){ var v=r[L.field]; if(!v) return;
+      inner+='<div class="pl"><div class="pl-tag">'+L.tag+'</div><div class="pl-tx '+L.psc+'">'+esc(v)+'</div></div>'; });
+    return '<div class="pk"'+(brk?' style="page-break-before:always"':'')+'>'+
+      '<div class="pk-h"><span class="pk-n">'+r.kuralNo+'</span>Kural '+r.kuralNo+' · <b>'+esc(r.chEn)+'</b> · Ch '+r.chNo+'</div>'+inner+'</div>';
+  }
+
+  function buildPrint(scope){
+    var items, title;
+    if(scope==='chapter'){ var ch=seen[view.chNo]; items=ch?ch.items.slice():[]; title='Chapter '+view.chNo+' — '+(ch?ch.chEn:''); }
+    else if(scope==='book'){ items=DATA.filter(function(r){ return view.book==='all'||String(r.bookNo)===view.book; }); title=(view.book==='all'?'All Books':('Book '+view.book+' — '+(BOOK_NAME[view.book]?BOOK_NAME[view.book].en:''))); }
+    else { items=DATA.slice(); title='Complete Thirukkural — 1,330 Kurals'; }
+    if(!items.length){ alert('Nothing to print for this view.'); return; }
+    var layers=activeLayers(); if(!layers.length){ alert('Turn on at least one language in Settings first.'); return; }
+    var perPage=S.print.perPage|0;
+    var coverURL=new URL('assets/photos/cover.png', location.href).href;
+    var fmOn=(scope!=='chapter') && (S.print.cover||S.print.dedication||S.print.foreword);
+
+    var body='';
+    if(scope!=='chapter' && S.print.cover) body+='<div class="cover"><img src="'+coverURL+'" alt="Cover"/></div>';
+    if(scope!=='chapter' && S.print.dedication) body+=DED_PRINT;
+    if(scope!=='chapter' && S.print.foreword) body+=FW_PRINT;
+
+    var lastCh=null, cnt=0;
+    items.forEach(function(r){
+      if(r.chNo!==lastCh){ body+=chapterHead(r, (lastCh!==null)||fmOn); lastCh=r.chNo; cnt=0; }
+      var brk=(perPage>0 && cnt>0 && cnt%perPage===0);
+      body+=kuralPrint(r, layers, brk); cnt++;
+    });
+    body+='<div class="pfoot">திருக்குறள் · Thirukkural · ثيروكورال<br/>Dedicated to H.H. Sheikh Zayed bin Sultan Al Nahyan — Father of the UAE 🇦🇪</div>';
+
+    var doc='<!DOCTYPE html><html><head><meta charset="UTF-8"/><title>Thirukkural — '+title+'</title>'+
+      '<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Noto+Serif+Tamil:wght@400;600;700&family=Amiri:ital,wght@0,400;0,700&display=swap" rel="stylesheet"/>'+
+      '<style>'+PRINT_CSS+'</style></head><body>'+body+
+      '<scr'+'ipt>window.onload=function(){setTimeout(function(){window.print();},500);};<'+'/scr'+'ipt></body></html>';
+    var w=window.open('','_blank'); if(!w){ alert('Please allow pop-ups to print or save as PDF.'); return; }
+    w.document.open(); w.document.write(doc); w.document.close();
+  }
+
+  // init
+  applyTheme(); applyFont(); syncPrintUI(); render();
+})();
+</script>
+</body>
+</html>
